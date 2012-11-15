@@ -1,3 +1,14 @@
+/* ===============================================================
+ * Filename: style.css
+ * Author: John Zeller
+ * Date Created: November 10, 2012
+ * Recently Updated: November 14, 2012
+ * ------
+ * Notes:
+ * =============================================================*/
+
+
+/* ==================== TYPOGRAPHY ==================== */
 body{
 	background-color:#0099CC;
 }
@@ -22,7 +33,8 @@ td
 	padding-right: 30px;
 	width: 12%;
 }
-	
+
+/* ====================== LAYOUT ====================== */
 #main
 {
         margin-top: 30px;
@@ -41,7 +53,7 @@ td
 	height: 35px;
 }
 
-#page
+#intro
 {
 	margin-left: 8%;
 	margin-right: 8%;
