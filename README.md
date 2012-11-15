@@ -1,4 +1,5 @@
 Classes
 =======
 
-All of my classes will be placed here, in a neatly organized repository just for them.
+I will be keeping all of the projects that I work on for courses in here. The courses that are currently represented include:
+* CS 275 - Introduction to Databases
