@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>John & Drake's Used Car Lot</title>
+<link rel="stylesheet" href="style.css">
+<script>
+	function nothing(){
+		alert("This does nothing yet!")
+	}
+
+	function OnChange(data){
+		if(data=='customer'){
+			inputform.innerHTML = "<br><br><br><form id='customerform'>"+
+				"Full Name:<br><input type='text' id='cname'><br><br>"+
+				"SSN:<br><input type='text' id='ssn'><br><br>"+
+				"Address:<br><input type='text' id='address'><br><br>"+
+				"Phone #:<br><input type='text' id='phone'><br><br>"+
+				"<input type='button' onClick='nothing()' value='Submit'>"
+			resultlist.innerHTML = "<table><tr><td><strong>Name</strong></td><td><strong>SSN</strong></td><td><strong>Address</strong></td><td><strong>Phone</strong></td></tr>"+
+				"<tr><td>John Zeller</td><td>123-45-6789</td><td>1234 SW 56th Ave Corvallis, OR</td><td>(503) 123-4567</td></tr>"+
+				"<tr><td>Wallace Grummet</td><td>242-45-6739</td><td>14 SW 6th Ave Corvallis, OR</td><td>(503) 543-3846</td></tr>"+
+				"<tr><td>Neil Tyson</td><td>653-12-2343</td><td>500 SW 6th Ave New York, NY</td><td>(231) 632-3424</td></tr></table>"
+		}else if(data=='employee'){
+                        inputform.innerHTML = "<br><br><br><form id='employeeform'>"+
+                                "Full Name:<br><input type='text' id='ename'><br><br>"+
+                                "SSN:<br><input type='text' id='ssn'><br><br>"+
+                                "Address:<br><input type='text' id='address'><br><br>"+
+                                "Phone #:<br><input type='text' id='phone'><br><br>"+
+                                "Salary:<br><input type='text' id='salary'><br><br>"+
+                                "<input type='button' onClick='nothing()' value='Submit'>"
+			resultlist.innerHTML = "<table><tr><td><strong>Name</strong></td><td><strong>SSN</strong></td><td><strong>Address</strong></td><td><strong>Phone</strong></td><td><strong>Salary</strong></td></tr>"+
+				"<tr><td>John Zeller</td><td>123-45-6789</td><td>1234 SW 56th Ave Corvallis, OR</td><td>(503) 123-4567</td><td>$12</td></tr>"+
+				"<tr><td>Wallace Grummet</td><td>242-45-6739</td><td>14 SW 6th Ave Corvallis, OR</td><td>(503) 543-3846</td><td>$424,231</td></tr>"+
+				"<tr><td>Neil Tyson</td><td>653-12-2343</td><td>500 SW 6th Ave New York, NY</td><td>(231) 632-3424</td></tr><td>$243,243,132</td></table>"
+                }else if(data=='car'){
+                        inputform.innerHTML = "<br><br><br><form id='carform'>"+
+                                "VIN:<br><input type='text' id='vin'><br><br>"+
+                                "Price:<br><input type='text' id='price'><br><br>"+
+                                "Make:<br><input type='text' id='make'><br><br>"+
+                                "Model:<br><input type='text' id='model'><br><br>"+
+                                "Color:<br><input type='text' id='color'><br><br>"+
+                                "<input type='button' onClick='nothing()' value='Submit'>"
+                	resultlist.innerHTML = "<table><tr><td><strong>VIN</strong></td><td><strong>Price</strong></td><td><strong>Make</strong></td><td><strong>Model</strong></td><td><strong>Color</strong></td></tr>"+
+				"<tr><td>2242242JKH2143214</td><td>$2000</td><td>Toyota</td><td>Celica</td><td>Silver</td></tr>"+
+				"<tr><td>2432432432FDK9076</td><td>$8000</td><td>Nissan</td><td>300zx</td><td>Daytona Blue</td></tr>"+
+				"<tr><td>423432142GKJK3146</td><td>$9000</td><td>Ford</td><td>Camry</td><td>Pink</td></tr></table>"
+		}else if(data=='lot'){
+                        inputform.innerHTML = "<br><br><br><form id='lotform'>"+
+                                "Lot #:<br><input type='text' id='lot_num'><br><br>"+
+                                "Capacity:<br><input type='text' id='capacity'><br><br>"+
+                                "<input type='button' onClick='nothing()' value='Submit'>"
+                	resultlist.innerHTML = "<table><tr><td><strong>Lot #</strong></td><td><strong>Capacity</strong></td></tr>"+
+				"<tr><td>01</td><td>2000</td></tr>"+
+				"<tr><td>02</td><td>200</td></tr>"+
+				"<tr><td>03</td><td>18</td></table>"
+		}else if(data=='purchased'){
+                        inputform.innerHTML = "<br><br><br><form id='purchasedform'>"+
+                                "Date:<br><input type='text' id='date'><br><br>"+
+                                "Sold For:<br><input type='text' id='sold_for'><br><br>"+
+                                "VIN:<br><input type='text' id='vin'><br><br>"+
+                                "Customer SSN:<br><input type='text' id='ssn'><br><br>"+
+                                "<input type='button' onClick='nothing()' value='Submit'>"
+                        resultlist.innerHTML = "<table><tr><td><strong>Date</strong></td><td><strong>Sold For</strong></td><td><strong>VIN</strong></td><td><strong>SSN</strong></td></tr>"+
+                                "<tr><td>October 2, 2012</td><td>$2000</td><td>2242242JKH2143214</td><td>123-45-6789</td></tr>"+
+                                "<tr><td>Septemer 3, 2012</td><td>$4000</td><td>2432432432FDK9076</td><td>242-45-6739</td></tr>"+
+                                "<tr><td>July 25, 2012</td><td>$12,000</td><td>423432142GKJK3146</td><td>653-12-2343</td></tr></table>"
+                }else if(data=='stored_in'){
+                        inputform.innerHTML = "<br><br><br><form id='stored_inform'>"+
+                                "VIN:<br><input type='text' id='vin'><br><br>"+
+                                "Lot #:<br><input type='text' id='lot_num'><br><br>"+
+                                "Date From:<br><input type='text' id='from'><br><br>"+
+                                "Date Until:<br><input type='text' id='until'><br><br>"+
+                                "<input type='button' onClick='nothing()' value='Submit'>"
+                        resultlist.innerHTML = "<table><tr><td><strong>VIN</strong></td><td><strong>Lot #</strong></td><td><strong>Date From</strong></td><td><strong>Date Until</strong></td></tr>"+
+                                "<tr><td>2242242JKH2143214</td><td>03</td><td>October 2, 2012</td><td>October 20, 2012</td></tr>"+
+                                "<tr><td>2432432432FDK9076</td><td>03</td><td>Septemer 3, 2012</td><td>Present</td></tr>"+
+                                "<tr><td>423432142GKJK3146</td><td>01</td><td>July 25, 2012</td><td>Present</td></tr></table>"
+                }else if(data=='works_in'){
+                        inputform.innerHTML = "<br><br><br><form id='works_inform'>"+
+                                "Lot #:<br><input type='text' id='lot_num'><br><br>"+
+                                "Employee SSN:<br><input type='text' id='ssn'><br><br>"+
+                                "Date Since:<br><input type='text' id='since'><br><br>"+
+                                "<input type='button' onClick='nothing()' value='Submit'>"
+                        resultlist.innerHTML = "<table><tr><td><strong>Lot #</strong></td><td><strong>Employee SSN</strong></td><td><strong>Date Since</strong></td></tr>"+
+                                "<tr><td>03</td><td>123-45-6789</td><td>October 2, 2012</td></tr>"+
+                                "<tr><td>02</td><td>242-45-6739</td><td>Septemer 3, 2012</td></tr>"+
+                                "<tr><td>01</td><td>653-12-2343</td><td>July 25, 2012</td></tr></table>"
+                }
+	}
+</script>
+</head>
+<body onload="OnChange('customer')">
+<div id="main">
+<div id="title">
+<h1>John & Drake's Used Car Lot</h1>
+</div>
+
+<div id="page">
+	<p>Here at John & Drake's Used Car Lot, we are all about customer service.
+	We want you to leave here with a smile on your face and key in your pocket.
+	Shop around! Let us know if you have any questions by emailing 
+	admin@johndrakeusedcars.com
+	</p>
+</div>
+
+<div id="info">
+	<div id="input">
+		<b>Input By</b>
+		<select id='inputby' name="inputby" onchange='OnChange(this.value);'>
+			<option value="customer">Customer</option>
+			<option value="employee">Employee</option>
+			<option value="car">Car</option>
+			<option value="lot">Lot</option>
+                        <option value="purchased">Purchased</option>
+                        <option value="stored_in">Stored In</option>
+                        <option value="works_in">Works In</option>
+		</select>
+		
+		<span id="inputform"></span>
+		<div style="font-size:10px;"><br>WARNING: Input of information to the database is reserved for authorized personnel ONLY!</div>
+	</div>
+	<div id="results">
+		<span id="resultlist"></span>
+	</div>
+</div>
+</div>
+</body>
+</html>
