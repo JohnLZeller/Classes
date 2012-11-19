@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="database.js"></script>
 </head>
 
-<body onload="OnChange('customer')">
+<body>
 
 	<div id="main">
 		<div id="title"><h1>John & Drake's Used Car Lot</h1></div>
@@ -26,18 +26,19 @@
 
 		<div id="info">
 			<div id="input">
-				<b>Input By</b>
-				<select id='inputby' name="inputby" onchange='OnChange(this.value);'>
-					<option value="customer">Customer</option>
-					<option value="employee">Employee</option>
-					<option value="car">Car</option>
-					<option value="lot">Lot</option>
-				        <option value="purchased">Purchased</option>
-				        <option value="stored_in">Stored In</option>
-				        <option value="works_in">Works In</option>
+				<b>What would you like to do?</b>
+				<select id='inputchoice' name="inputchoice" onchange='OnChoice(this.value);'>
+					<option value=""></optin>
+				        <option value="view">View</option>
+					<option value="insert">Insert</option>
+					<option value="modify">Modify</option>
+					<option value="delete">Delete</option>
 				</select>
 		
-				<span id="inputform"></span>
+				<!-- Once this is selected, it passes to the OnChoice JS that (having the choice type attached) generates an input form list -->
+				<span id="input_by"></span>
+
+				<span id="input_form"></span>
 
 				<div style="font-size:10px;"><br>WARNING: Input of information to the database is reserved for authorized personnel ONLY!</div>
 			</div>
