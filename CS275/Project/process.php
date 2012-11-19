@@ -14,6 +14,8 @@
 <body>
 
 <?php
+
+ini_set('display_errors', 'On');
 /*error_reporting(E_ALL);
 $mysqli = new mysqli("oniddb.cws.oregonstate.edu", "zellerjo-db", "RQXKvRU7D3W0x7bO", "zellerjo-db");
 if ($mysqli->connect_errno) {
@@ -22,52 +24,52 @@ if ($mysqli->connect_errno) {
 
 /* This is bad, little bobby tables will demonstrate */
 
-if( $_POST['customer'] ) {
-	echo "Name: " $_POST['cname'];
-	echo "SSN: " $_POST['ssn'];
-	echo "Address: " $_POST['address'];
-	echo "Phone #: " $_POST['phone'];
+if( isset( $_POST['customer'] ) ) {
+	echo "Name: " . $_POST['cname'];
+	echo "<br>SSN: " . $_POST['ssn'];
+	echo "<br>Address: " . $_POST['address'];
+	echo "<br>Phone #: " . $_POST['phone'];
 }
 
-if( $_POST['employee'] ) {
-	echo "Name: " $_POST['cname'];
-	echo "SSN: " $_POST['ssn'];
-	echo "Address: " $_POST['address'];
-	echo "Phone #: " $_POST['phone'];
-	echo "Salary: " $_POST['salary'];
+if( isset( $_POST['employee'] ) ) {
+	echo "Name: " . $_POST['cname'];
+	echo "<br>SSN: " . $_POST['ssn'];
+	echo "<br>Address: " . $_POST['address'];
+	echo "<br>Phone #: " . $_POST['phone'];
+	echo "<br>Salary: " . $_POST['salary'];
 }
 
-if( $_POST['car'] ) {
-	echo "VIN: " $_POST['vin'];
-	echo "Price: " $_POST['price'];
-	echo "Make: " $_POST['make'];
-	echo "Model: " $_POST['model'];
-	echo "Color: " $_POST['color'];
+if( isset( $_POST['car'] ) ) {
+	echo "VIN: " . $_POST['vin'];
+	echo "<br>Price: " . $_POST['price'];
+	echo "<br>Make: " . $_POST['make'];
+	echo "<br>Model: " . $_POST['model'];
+	echo "<br>Color: " . $_POST['color'];
 }
 
-if( $_POST['lot'] ) {
-	echo "Lot #: " $_POST['lot_num'];
-	echo "Capacity: " $_POST['capacity'];
+if( isset( $_POST['lot'] ) ) {
+	echo "Lot #: " . $_POST['lot_num'];
+	echo "<br>Capacity: " . $_POST['capacity'];
 }
 
-if( $_POST['purchased'] ) {
-	echo "Date: " $_POST['date'];
-	echo "Sold For: " $_POST['sold_for'];
-	echo "VIN: " $_POST['vin'];
-	echo "Customer SSN: " $_POST['ssn'];
+if( isset( $_POST['purchased'] ) ) {
+	echo "Date: " . $_POST['date'];
+	echo "<br>Sold For: " . $_POST['sold_for'];
+	echo "<br>VIN: " . $_POST['vin'];
+	echo "<br>Customer SSN: " . $_POST['ssn'];
 }
 
-if( $_POST['stored_in'] ) {
-	echo "VIN: " $_POST['vin'];
-	echo "Lot #: " $_POST['lot_num'];
-	echo "Date From: " $_POST['since'];
-	echo "Date Until: " $_POST['until'];
+if( isset( $_POST['stored_in'] ) ) {
+	echo "VIN: " . $_POST['vin'];
+	echo "<br>Lot #: " . $_POST['lot_num'];
+	echo "<br>Date From: " . $_POST['since'];
+	echo "<br>Date Until: " . $_POST['until'];
 }
 
-if( $_POST['works_in'] ) {
-	echo "Lot #: " $_POST['lot_num'];
-	echo "Employee SSN: " $_POST['ssn'];
-	echo "Date Since: " $_POST['since'];
+if( isset( $_POST['works_in'] ) ) {
+	echo "Lot #: " . $_POST['lot_num'];
+	echo "<br>Employee SSN: " . $_POST['ssn'];
+	echo "<br>Date Since: " . $_POST['since'];
 }
 
 ?>
