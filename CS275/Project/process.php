@@ -1,4 +1,9 @@
 <!DOCTYPE HTML>
+<!-- Things to add
+ *	Sanitize the inputs
+ *	Verify foreign key constraints
+-->
+
 
 <html>
 
@@ -117,11 +122,15 @@
     <!-- The SQL parser that gives all the necessary functionality to the database application -->
     <?php
 	error_reporting(E_ALL);
-	$mysqli = new mysqli("oniddb.cws.oregonstate.edu", "zellerjo-db", "RQXKvRU7D3W0x7bO", "zellerjo-db");
-	if ($mysqli->connect_errno) {
-	    echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-	}else{
-	    echo "CONNECTED!!!";
+	
+	function connect(){
+	    $mysqli = new mysqli("oniddb.cws.oregonstate.edu", "zellerjo-db", "RQXKvRU7D3W0x7bO", "zellerjo-db");
+	    if ($mysqli->connect_errno) {
+		echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	    }else{
+		echo "CONNECTED!!!";
+	    }
+	    return $mysqli;
 	}
     
 	function view_data($input_type){
@@ -158,10 +167,12 @@
 		case "Customer":			// Add info to Customer
 		    $query = "";
 		    $list = array($_POST['ssn'], $_POST['cname'], $_POST['address'], $_POST['phone']);
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
 		    if ($list[0] != ''){ // Make sure that the primary key SSN exists
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////THE FOLLOWING SHOULD WORK AND IT DOES NOT!!!
-			if ( !($stmt = $mysqli->prepare("INSERT INTO Customers(ssn, cname, address, phone) 						\
-							 VALUES ('" . $list[0] . "', '" . $list[1] . "', '" . $list[2] . "', '" . $list[3] . "')") ) ) {
+			if ( !($stmt = $mysqli->prepare("INSERT INTO Customers(ssn, cname, address, phone)" .
+							" VALUES ('" . $list[0] . "', '" . $list[1] . "', '" . $list[2] . "', '" . $list[3] . "')") ) ) {
 			    echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
 			if (!$stmt->execute()) {
@@ -169,16 +180,6 @@
 			} else {
 			    echo "Added " . $stmt->affected_rows . " rows to Customers.";
 			}
-/*///////////////////////* TESTING WITH THIS BLOCK SHOULD WORK, AS IT DOES WITH SIMPLISTIC EXAMPLES 
-/*			if ( !($stmt = $mysqli->prepare("INSERT INTO Customers(ssn, cname, address, phone) VALUES ('543231234', 'John Zeller', '1234 SW 8th Ave', '1231234')") ) ) {
-/*			    echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
-/*			}
-/*			if (!$stmt->execute()) {
-/*			    echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-/*			} else {
-/*			    echo "Added " . $stmt->affected_rows . " rows to Cars.";
-/*			}
-/*//////////////////////*/
 		    }else{
 			echo "Missing Primary Key SSN!";
 		    }
@@ -186,10 +187,12 @@
 		case "Employee":			// Add info to Employee
 		    $query = "";
 		    $list = array($_POST['ssn'], $_POST['ename'], $_POST['address'], $_POST['phone'], $_POST['salary']);
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
 		    if ($list[0] != ''){ // Make sure that the primary key SSN exists
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////THE FOLLOWING SHOULD WORK AND IT DOES NOT!!!
-			if ( !($stmt = $mysqli->prepare("INSERT INTO Employees(ssn, ename, address, phone, salary)					\
-							 VALUES ('" . $list[0] . "', '" . $list[1] . "', '" . $list[2] . "', '" . $list[3] . "', '" . $list[4] . "');") ) ) {
+			if ( !($stmt = $mysqli->prepare("INSERT INTO Employees(ssn, ename, address, phone, salary)" .
+							" VALUES ('" . $list[0] . "', '" . $list[1] . "', '" . $list[2] . "', '" . $list[3] . "', '" . $list[4] . "');") ) ) {
 			    echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
 			if (!$stmt->execute()) {
@@ -204,10 +207,12 @@
 		case "Car":				// Add info to Car
 		    $query = "";
 		    $list = array($_POST['vin'], $_POST['price'], $_POST['make'], $_POST['model'], $_POST['color']);
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
 		    if ($list[0] != ''){ // Make sure that the primary key SSN exists
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////THE FOLLOWING SHOULD WORK AND IT DOES NOT!!!
-			if ( !($stmt = $mysqli->prepare("INSERT INTO Cars(vin, price, make, model, color)						\
-							 VALUES ('" . $list[0] . "', '" . $list[1] . "', '" . $list[2] . "', '" . $list[3] . "', '" . $list[4] . "');") ) ) {
+			if ( !($stmt = $mysqli->prepare("INSERT INTO Cars(vin, price, make, model, color)" .
+							" VALUES ('" . $list[0] . "', '" . $list[1] . "', '" . $list[2] . "', '" . $list[3] . "', '" . $list[4] . "');") ) ) {
 			    echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
 			if (!$stmt->execute()) {
@@ -222,10 +227,12 @@
 		case "Lot":				// Add info to Lot
 		    $query = "";
 		    $list = array($_POST['lot_num'], $_POST['capacity']);
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
 		    if ($list[0] != ''){ // Make sure that the primary key SSN exists
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////THE FOLLOWING SHOULD WORK AND IT DOES NOT!!!
-			if ( !($stmt = $mysqli->prepare("INSERT INTO Lots (lot_num, capacity)								\
-							 VALUES ('" . $list[0] . "', '" . $list[1] . "');") ) ) {
+			if ( !($stmt = $mysqli->prepare("INSERT INTO Lots (lot_num, capacity)" .
+							" VALUES ('" . $list[0] . "', '" . $list[1] . "');") ) ) {
 			    echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
 			if (!$stmt->execute()) {
@@ -245,10 +252,12 @@
 		case "Purchased":			// Add info to Purchased
 		    $query = "";
 		    $list = array($_POST['date'], $_POST['sold_for'], $_POST['vin'], $_POST['ssn']);
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
 		    if (($list[2] != '') || ($list[3] != '')){ // Make sure that the primary key SSN exists
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////THE FOLLOWING SHOULD WORK AND IT DOES NOT!!!
-			if ( !($stmt = $mysqli->prepare("INSERT INTO Purchased(date, sold_for, vin, ssn)						\
-							 VALUES ('" . $list[0] . "', '" . $list[1] . "', '" . $list[2] . "', '" . $list[3] . "');") ) ) {
+			if ( !($stmt = $mysqli->prepare("INSERT INTO Purchased(date, sold_for, vin, ssn)" .
+							" VALUES ('" . $list[0] . "', '" . $list[1] . "', '" . $list[2] . "', '" . $list[3] . "');") ) ) {
 			    echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
 			if (!$stmt->execute()) {
@@ -265,10 +274,12 @@
 		case "Stored In":			// Add info to Stored In
 		    $query = "";
 		    $list = array($_POST['since'], $_POST['until'], $_POST['vin'], $_POST['lot_num']);
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
 		    if (($list[2] != '') || ($list[3] != '')){ // Make sure that the primary key SSN exists
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////THE FOLLOWING SHOULD WORK AND IT DOES NOT!!!
-			if ( !($stmt = $mysqli->prepare("INSERT INTO Stored_In(since, until, vin, lot_num)								\
-							 VALUES ('" . $list[0] . "', '" . $list[1] . "', '" . $list[2] . "', '" . $list[3] . "');") ) ) {
+			if ( !($stmt = $mysqli->prepare("INSERT INTO Stored_In(since, until, vin, lot_num)" .
+							" VALUES ('" . $list[0] . "', '" . $list[1] . "', '" . $list[2] . "', '" . $list[3] . "');") ) ) {
 			    echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
 			if (!$stmt->execute()) {
@@ -285,10 +296,12 @@
 		case "Works In":			// Add info to Works In
 		    $query = "";
 		    $list = array($_POST['since'], $_POST['ssn'], $_POST['lot_num']);
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
 		    if (($list[1] != '') || ($list[2] != '')){ // Make sure that the primary key SSN exists
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////THE FOLLOWING SHOULD WORK AND IT DOES NOT!!!
-			if ( !($stmt = $mysqli->prepare("INSERT INTO Works_In(since, ssn, lot_num)								\
-							 VALUES ('" . $list[0] . "', '" . $list[2] . "', '" . $list[3] . "');") ) ) {
+			if ( !($stmt = $mysqli->prepare("INSERT INTO Works_In(since, ssn, lot_num)" .
+							" VALUES ('" . $list[0] . "', '" . $list[2] . "', '" . $list[3] . "');") ) ) {
 			    echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 			}
 			if (!$stmt->execute()) {
