@@ -128,7 +128,12 @@
     <!-- The SQL parser that gives all the necessary functionality to the database application -->
     <?php
 	error_reporting(E_ALL);
+	if($_POST['choice']!="View"){ // Only run sanitize if it's Insert or Delete running
 	$tempver = sanitize($_POST['input']); /* Call the sanitize function to check that all variables are within the rules */
+	}else{
+	    $tempver = 0;
+	}
+	
 	if ($tempver==1){
 	    $to_print_string = "Restart your submission and try again<br>";
 	    printresults($to_print_string);
@@ -935,33 +940,27 @@
 	    switch ($_POST['input']){
 		case "Customer":
 		    /* Drake's code */
-			$result = mysqli_query($mysqli, $_POST['Customers']);
-			if($result == false){
-				 echo "<h4>Error: " . mysqli_error($mysqli) . "</h4>";
-			}else if(@mysqli_num_rows($result) == 0){
-				echo "<h4>Query completed. No results returned.</h4>";
-			}
-			else{
-				/* Display results */
-				echo "<table border=’1’><thead><tr>";
-				$finfo = mysqli_fetch_fields($result);
-				foreach($finfo as $field){
-					echo "<th>".$field->name."</th>";
-				}
-				echo "</tr></thead>
-				<tbody>";
-				for ($i=0;$i < mysqli_num_rows($result);$i++){
-					echo "<tr>";
-					$row = mysqli_fetch_row($result);
-					foreach($row as $value){
-						echo "<td>".$value."</td>";
-					}
-					echo "</tr>";
-				}
-				echo "</tbody></table>";
-			} 
-                       
-                       
+		    echo "<h3>Customer View</h3>";
+		    $result = mysql_query("SELECT * FROM Customer");
+		    echo "<br />";
+		    
+		    echo "<table border='1'>";
+		    echo "<tr> <th>Customer Name</th> <th>SSN</th> <th>Phone</th> <th>Address</th> </tr>";
+		    // keeps getting the next row until there are no more to get
+		    while($row = mysqli_fetch_array( $result )) {
+			    // Print out the contents of each row into a table
+			    
+			    echo "<tr><td>";
+			    echo $row['cname'];
+			    echo "</td><td>";
+			    echo $row['ssn'];
+			    echo "</td><td>";
+			    echo $row['phone'];
+			    echo "</td><td>";
+			    echo $row['address'];
+			    echo "</td></tr>";
+		    }
+		    /* Display results */
                    break;
 		case "Employee":
 		    echo "Employee View";
