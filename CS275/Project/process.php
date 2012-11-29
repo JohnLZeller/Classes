@@ -885,7 +885,7 @@
 			return 1; // ERROR RETURN
 		    }
 			// Check that SSN has ONLY numbers - ASCII 48-57 NUMBERS
-		    for($i=0; $i<(strlen($list[1]); $i++){
+		    for($i=0; $i<strlen($list[1]); $i++){
 			$temp = 0;
 			for($a=48; $a<=57; $a++){ 		// Checking all NUMBERS
 			    if(ord(substr($list[1], $i, 1)) != $a){
