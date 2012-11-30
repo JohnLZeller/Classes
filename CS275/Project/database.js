@@ -106,6 +106,8 @@ function OnChange(data){
 			</form>"
 		resultstable.innerHTML = "<center><h2>Guidelines for Inserting info into Customers table</h2></center>		\
 				* = <font color='red'>REQUIRED</font><br>							\
+				<font color='red'>WARNING: Primary Key - SSN <b>must not</b> match a valid customer ssn already \
+					in the database</font><br>								\
 				<h3>Full Name:</h3>										\
 					Must <b>not</b> be longer than 40 characters.<br>					\
 				        Must contain <b>only</b> letters and spaces.<br>					\
@@ -137,6 +139,8 @@ function OnChange(data){
 			</form>"
 		resultstable.innerHTML = "<center><h2>Guidelines for Inserting info into Employees table</h2></center>		\
 				* = <font color='red'>REQUIRED</font><br>							\
+				<font color='red'>WARNING: Primary Key - SSN <b>must not</b> match a valid employee ssn already \
+					in the database</font><br>								\
 				<h3>Full Name:</h3>										\
 					Must <b>not</b> be longer than 40 characters.<br>					\
 				        Must contain <b>only</b> letters and spaces.<br>					\
@@ -171,6 +175,8 @@ function OnChange(data){
 			</form>"
 		resultstable.innerHTML = "<center><h2>Guidelines for Inserting info into Cars table</h2></center>		\
 				* = <font color='red'>REQUIRED</font><br>							\
+				<font color='red'>WARNING: Primary Key - VIN <b>must not</b> match a valid car VIN already in	\
+					the database</font><br>									\
 				<h3>VIN*:</h3>											\
 					Must be <b>exactly</b> 17 characters long.<br>						\
 				        Must contain <b>only</b> numbers and letters.<br>					\
@@ -201,7 +207,9 @@ function OnChange(data){
 				<input name='lot' type='submit' value='Submit'>				\
 			</form>"
 		resultstable.innerHTML = "<center><h2>Guidelines for Inserting info into Lots table</h2></center>		\
-				* = <font color='red'>REQUIRED</font<br>							\
+				* = <font color='red'>REQUIRED</font><br>							\
+				<font color='red'>WARNING: Primary Key - Lot # <b>must not</b> match a valid lot # already in	\
+					the database</font><br>									\
 				<h3>Lot #*:</h3>										\
 					Must <b>not</b> be longer than 3 characters.<br>					\
 				        Must contain <b>only</b> numbers.<br>							\
