@@ -1,9 +1,19 @@
 <!DOCTYPE HTML>
 <!-- Things to add
- *	Sanitize the inputs
- *	Verify foreign key constraints
+ *	Make empty values that come from view, a string called '<i>null</i>'
+ *	guidelinestable.innerHTML works
+ *	resultstable.innerHTML works
 -->
 
+<!-- Deleting things works like this
+ * When you select delete, show a view of the table, along with guidelines on how to delete
+ * Look at things in the table and determine what you would like to delete by
+ * Warning: You may only delete ONE item at a time. And only when selected by the primary key
+-->
+
+
+<!-- List all the necessary functions within this code
+-->
 
 <html>
 
@@ -46,7 +56,7 @@
 				    echo "<b>View By</b> ";
 				}else if($_POST['choice']=="Insert"){
 				    echo "<b>Insert By</b> ";
-				}else if($_POST['choice']=="Delete"){
+				}else if($_POST['choice']=="Delete" or $_POST['choice']=="Delete_Now"){
 				    echo "<b>Delete By</b> ";
 				}
 
@@ -58,7 +68,7 @@
 				<?php
 
 				/* This displays the variables coming in from website */
-				if($_POST['choice']!='View'){
+				if($_POST['choice']=='Insert'){
 				    switch ($_POST['input']){
 					case "Customer":
 					    echo "Name:<br>                " . $_POST['cname'] . "<br>";
@@ -104,6 +114,146 @@
 					default:
 					    continue;
 				    }
+				}else if($_POST['choice']=='Delete'){
+				    switch ($_POST['input']){
+					case "Customer":
+					    echo "										
+						<form id='customerform' action='process.php' method='post'>						
+						    <input type='hidden' name='choice' value='Delete_Now'>				
+						    <input type='hidden' name='input' value='Customer'>				
+						    SSN<font color='red'>*</font>:<br><input type='text' name='ssn'><br><br>			
+						    <input name='customer' type='submit' value='Submit'>						
+						</form>";
+					    echo "<center><h2>Guidelines for Deleting info from Customers table</h2></center>	
+							    <font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				
+							    <font color='red'>WARNING: Primary Key - SSN <b>must not</b> match a valid customer ssn already 
+								    in the database</font><br>								
+							    <h3>SSN<font color='red'>*</font>:</h3>								
+								    Must be <b>exactly</b> 9 characters long.<br>						
+								    Must contain <b>only</b> numbers.<br>							
+								    <i>Example: 298472937</i><br>";
+					    break;
+					case "Employee":
+					    echo "										
+						<form id='employeeform' action='process.php' method='post'>						
+						    <input type='hidden' name='choice' value='Delete_Now'>				
+						    <input type='hidden' name='input' value='Employee'>				
+						    SSN<font color='red'>*</font>:<br><input type='text' name='ssn'><br><br>			
+						    <input name='employee' type='submit' value='Submit'>						
+						</form>";
+					    echo "<center><h2>Guidelines for Deleting info from Employees table</h2></center>	
+							    <font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				
+							    <font color='red'>WARNING: Primary Key - SSN <b>must not</b> match a valid employee ssn already 
+								    in the database</font><br>								
+							    <h3>SSN<font color='red'>*</font>:</h3>								
+								    Must be <b>exactly</b> 9 characters long.<br>						
+								    Must contain <b>only</b> numbers.<br>							
+								    <i>Example: 298472937</i><br>";
+					    break;
+					case "Car":
+					    echo "										
+						<form id='carform' action='process.php' method='post'>							
+						    <input type='hidden' name='choice' value='Delete_Now'>				
+						    <input type='hidden' name='input' value='Car'>				
+						    VIN<font color='red'>*</font>:<br><input type='text' name='vin'><br><br>			
+						    <input name='car' type='submit' value='Submit'>							
+						</form>";
+					    echo "<center><h2>Guidelines for Deleting info from Cars table</h2></center>		
+							    <font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				
+							    <font color='red'>WARNING: Primary Key - VIN <b>must not</b> match a valid car VIN already in	
+								    the database</font><br>									
+							    <h3>VIN<font color='red'>*</font>:</h3>								
+								    Must be <b>exactly</b> 17 characters long.<br>						
+								    Must contain <b>only</b> numbers and letters.<br>					
+								    <i>Example: 6G2EC57Y08L526779</i><br>";
+					    break;
+					case "Lot":
+					    echo "										
+						<form id='lotform' action='process.php' method='post'>							
+						    <input type='hidden' name='choice' value='Delete_Now'>				
+						    <input type='hidden' name='input' value='Lot'>				
+						    Lot #:<br><input type='text' name='lot_num'><br><br>						
+						    <input name='lot' type='submit' value='Submit'>							
+						</form>";
+					    echo "<center><h2>Guidelines for Deleting info from Lots table</h2></center>		
+							    <font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				
+							    <font color='red'>WARNING: Primary Key - Lot # <b>must not</b> match a valid lot # already in	
+								    the database</font><br>									
+							    <h3>Lot #<font color='red'>*</font>:</h3>							
+								    Must <b>not</b> be longer than 3 characters.<br>					
+								    Must contain <b>only</b> numbers.<br>							
+								    <i>Example: 001</i><br>";
+					    break;
+					case "Purchased":
+					    echo "										
+						<form id='purchasedform' action='process.php' method='post'>						
+						    <input type='hidden' name='choice' value='Delete_Now'>				
+						    <input type='hidden' name='input' value='Purchased'>				
+						    VIN<font color='red'>*</font>:<br><input type='text' name='vin'><br><br>			
+						    Customer SSN<font color='red'>*</font>:<br><input type='text' name='ssn'><br><br>		
+						    <input name='purchased' type='submit' value='Submit'>						
+						</form>";
+					    echo "<center><h2>Guidelines for Deleting info from Purchased table</h2></center>	
+							    <font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				
+							    <font color='red'>WARNING: Foreign Constraint - VIN <b>must</b> match a valid car already in	
+								    the database and SSN <b>must</b> match a valid customer already in the database.	
+								    </font><br>										
+							    <h3>VIN<font color='red'>*</font>:</h3>								
+								    Must be <b>exactly</b> 17 characters long.<br>						
+								    Must contain <b>only</b> numbers and letters.<br>					
+								    <i>Example: 6G2EC57Y08L526779</i><br>							
+							    <h3>SSN<font color='red'>*</font>:</h3>								
+								    Must be <b>exactly</b> 9 characters long.<br>						
+								    Must contain <b>only</b> numbers.<br>							
+								    <i>Example: 298472937</i><br>";
+					    break;
+					case "Stored In":
+					    echo "										
+						<form id='stored_inform' action='process.php' method='post'>						
+						    <input type='hidden' name='choice' value='Delete_Now'>				
+						    <input type='hidden' name='input' value='Stored In'>				
+						    VIN<font color='red'>*</font>:<br><input type='text' name='vin'><br><br>			
+						    Lot #<font color='red'>*</font>:<br><input type='text' name='lot_num'><br><br>			
+						    <input name='stored_in' type='submit' value='Submit'>						
+						</form>";
+					    echo "<center><h2>Guidelines for Deleting info from Stored In table</h2></center>	
+							    <font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				
+							    <font color='red'>WARNING: Foreign Constraint - VIN <b>must</b> match a valid car already in	
+								    the database and Lot # <b>must</b> match a valid lot already in the database.		
+								    </font><br>										
+							    <h3>VIN<font color='red'>*</font>:</h3>								
+								    Must be <b>exactly</b> 17 characters long.<br>						
+								    Must contain <b>only</b> numbers and letters.<br>					
+								    <i>Example: 6G2EC57Y08L526779</i><br>							
+							    <h3>Lot #<font color='red'>*</font>:</h3>							
+								    Must <b>not</b> be longer than 3 characters.<br>					
+								    Must contain <b>only</b> numbers.<br>							
+								    <i>Example: 001</i><br>";
+					    break;
+					case "Works In":
+					    echo "										
+						<form id='works_inform' action='process.php' method='post'>						
+						    <input type='hidden' name='choice' value='Delete_Now'>				
+						    <input type='hidden' name='input' value='Works In'>				
+						    Lot #<font color='red'>*</font>:<br><input type='text' name='lot_num'><br><br>			
+						    Employee SSN<font color='red'>*</font>:<br><input type='text' name='ssn'><br><br>		
+						    <input name='works_in' type='submit' value='Submit'>						
+						</form>";
+					    echo "<center><h2>Guidelines for Deleting info from Works In table</h2></center>		
+							    <font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				
+							    <font color='red'>WARNING: Foreign Constraint - VIN <b>must</b> match a valid car already in	
+								    the database and Lot # <b>must</b> match a valid lot already in the database.		
+								    </font><br>										
+							    <h3>Lot #<font color='red'>*</font>:</h3>							
+								    Must <b>not</b> be longer than 3 characters.<br>					
+								    Must contain <b>only</b> numbers.<br>							
+								    <i>Example: 001</i><br>									
+							    <h3>SSN<font color='red'>*</font>:</h3>								
+								    Must be <b>exactly</b> 9 characters long.<br>						
+								    Must contain <b>only</b> numbers.<br>							
+								    <i>Example: 298472937</i><br>";
+					    break;
+				    }
 				}
 				
 				?>
@@ -122,7 +272,7 @@
     <!-- The SQL parser that gives all the necessary functionality to the database application -->
     <?php
 	error_reporting(E_ALL);
-	if($_POST['choice']!="View"){ // Only run sanitize if it's Insert or Delete running
+	if($_POST['choice']=="Insert"){ // Only run sanitize if it's Insert running
 	$tempver = sanitize($_POST['input']); /* Call the sanitize function to check that all variables are within the rules */
 	}else{
 	    $tempver = 0;
@@ -142,7 +292,12 @@
 			insert_data($_POST['input']);
 			break;
 		    case "Delete":
+			view_data($_POST['input']);
+			break;
+		    case "Delete_Now":
 			delete_data($_POST['input']);
+			break;
+		    default:
 			break;
 		}
 	    }
@@ -991,6 +1146,7 @@
 			    }
 			    $to_print_string .= "</table>";
 		    }
+		    break;
 		case "Lot":
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
@@ -1242,43 +1398,173 @@
 	}
 	
 	function delete_data($input_type){
+	    $to_print_string = "";
 	    switch ($_POST['input']){
-		case "Customer":
+		case "Customer":		// Search for ssn in Customers table and delete that
 		    $query = "";
-		    $list = array($_POST['cname'], $_POST['ssn'], $_POST['address'], $_POST['phone']);
-		    foreach ($list as $item){ echo $item; }
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ($_POST['ssn'] != ''){ // Make sure that the primary key SSN exists
+			if ( !($stmt = $mysqli->prepare("DELETE FROM Customers WHERE ssn=?") ) ) {
+				echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+			}
+			if (!$stmt->bind_param("s", $_POST['ssn'])) {
+				echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+			}
+			if (!$stmt->execute()) {
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+			} else {
+			    $to_print_string .= "Deleted " . $stmt->affected_rows . " rows from Customers.<br>";
+			}
+		    }else{
+			$to_print_string .= "Missing Primary Key SSN!<br>";
+		    }
 		    break;
-		case "Employee":
+		case "Employee":			// Add info to Employee
 		    $query = "";
-		    $list = array($_POST['cname'], $_POST['ssn'], $_POST['address'], $_POST['phone'], $_POST['salary']);
-		    foreach ($list as $item){ echo $item; }
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ($_POST['ssn'] != ''){ // Make sure that the primary key SSN exists
+			if ( !($stmt = $mysqli->prepare("DELETE FROM Employees WHERE ssn=?") ) ) {
+				echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+			}
+			if (!$stmt->bind_param("s", $_POST['ssn'])) {
+				echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+			}
+			if (!$stmt->execute()) {
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+			} else {
+			    $to_print_string .= "Deleted " . $stmt->affected_rows . " rows from Employees.<br>";
+			}
+		    }else{
+			$to_print_string .= "Missing Primary Key SSN!<br>";
+		    }
 		    break;
-		case "Car":
+		case "Car":				// Add info to Car
 		    $query = "";
-		    $list = array($_POST['vin'], $_POST['price'], $_POST['make'], $_POST['model'], $_POST['color']);
-		    foreach ($list as $item){ echo $item; }
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ($_POST['vin'] != ''){ // Make sure that the primary key SSN exists
+			if ( !($stmt = $mysqli->prepare("DELETE FROM Cars WHERE vin=?") ) ) {
+				echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+			}
+			if (!$stmt->bind_param("s", $_POST['vin'])) {
+				echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+			}
+			if (!$stmt->execute()) {
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+			} else {
+			    $to_print_string .= "Deleted " . $stmt->affected_rows . " rows from Cars.<br>";
+			}
+		    }else{
+			$to_print_string .= "Missing Primary Key VIN!<br>";
+		    }
 		    break;
-		case "Lot":
+		case "Lot":				// Add info to Lot
 		    $query = "";
-		    $list = array($_POST['lot_num'], $_POST['capacity']);
-		    foreach ($list as $item){ echo $item; }
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ($_POST['lot_num'] != ''){ // Make sure that the primary key SSN exists
+			if ( !($stmt = $mysqli->prepare("DELETE FROM Lots WHERE lot_num=?") ) ) {
+				echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+			}
+			if (!$stmt->bind_param("s", $_POST['lot_num'])) {
+				echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+			}
+			if (!$stmt->execute()) {
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+			} else {
+			    $to_print_string .= "Deleted " . $stmt->affected_rows . " rows from Lots.<br>";
+			}
+		    }else{
+			$to_print_string .= "Missing Primary Key Lot #!<br>";
+		    }
 		    break;
-		case "Purchased":
+		
+		
+		
+		
+		case "Purchased":			// Add info to Purchased
 		    $query = "";
-		    $list = array($_POST['date'], $_POST['sold_for'], $_POST['vin'], $_POST['ssn']);
-		    foreach ($list as $item){ echo $item; }
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ($_POST['vin'] != '' and $_POST['ssn'] != ''){ // Make sure that the primary keys VIN and SSN exist
+			if ( !($stmt = $mysqli->prepare("DELETE FROM Purchased WHERE vin=? AND ssn=?") ) ) {
+				echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+			}
+			if (!$stmt->bind_param("ss", $_POST['vin'], $_POST['ssn'])) {
+				echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+			}
+			if (!$stmt->execute()) {
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+			} else {
+			    $to_print_string .= "Deleted " . $stmt->affected_rows . " rows from Purchased.<br>";
+			}
+		    }else{
+			if(($list[2] == '')){
+				$to_print_string .= "Missing Primary Key VIN!<br>";	
+			}else if(($list[3] == '')){
+				$to_print_string .= "Missing Primary Key SSN!<br>";	
+			}
+		    }
 		    break;
-		case "Stored In":
+		case "Stored In":			// Add info to Stored In
 		    $query = "";
-		    $list = array($_POST['vin'], $_POST['lot_num'], $_POST['since'], $_POST['until']);
-		    foreach ($list as $item){ echo $item; }
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ($_POST['vin'] != '' and $_POST['lot_num'] != ''){ // Make sure that the primary keys VIN and Lot # exist
+			if ( !($stmt = $mysqli->prepare("DELETE FROM Stored_In WHERE vin=? AND lot_num=?") ) ) {
+				echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+			}
+			if (!$stmt->bind_param("ss", $_POST['vin'], $_POST['lot_num'])) {
+				echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+			}
+			if (!$stmt->execute()) {
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+			} else {
+			    $to_print_string .= "Deleted " . $stmt->affected_rows . " rows from Stored_In.<br>";
+			}
+		    }else{
+			if(($list[2] == '')){
+				$to_print_string .= "Missing Primary Key VIN!<br>";	
+			}else if(($list[3] == '')){
+				$to_print_string .= "Missing Primary Key Lot #!<br>";	
+			}
+		    }
 		    break;
-		case "Works In":
+		case "Works In":			// Add info to Works In
 		    $query = "";
-		    $list = array($_POST['lot_num'], $_POST['ssn'], $_POST['since']);
-		    foreach ($list as $item){ echo $item; }
+		    
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ($_POST['ssn'] != '' and $_POST['lot_num'] != ''){ // Make sure that the primary keys SSN and Lot # exist
+			if ( !($stmt = $mysqli->prepare("DELETE FROM Works_In WHERE ssn=? AND lot_num=?") ) ) {
+				echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+			}
+			if (!$stmt->bind_param("ss", $_POST['ssn'], $_POST['lot_num'])) {
+				echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+			}
+			if (!$stmt->execute()) {
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+			} else {
+			    $to_print_string .= "Deleted " . $stmt->affected_rows . " rows from Works In.<br>";
+			}
+		    }else{
+			if(($list[1] == '')){
+				$to_print_string .= "Missing Primary Key SSN!<br>";	
+			}else if(($list[2] == '')){
+				$to_print_string .= "Missing Primary Key Lot #!<br>";	
+			}
+		    }
 		    break;
 	    }
+	    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 	}
 	
 	
