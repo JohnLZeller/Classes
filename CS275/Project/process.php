@@ -114,13 +114,7 @@
 				<div style="font-size:10px;"><br>WARNING: Input of information to the database is reserved for authorized personnel ONLY!</div>
 			</div>
 
-			<div id="results">
-			    <?php
-				function printresults($to_print){
-				    echo $to_print;
-				}
-			    ?>
-			</div>
+			<div id="results"><span id="resultstable"></span></div>
 		</div>
 	</div>
 
@@ -159,10 +153,8 @@
 		$mysqli = new mysqli("oniddb.cws.oregonstate.edu", "zellerjo-db", "RQXKvRU7D3W0x7bO", "zellerjo-db");
 		if ($mysqli->connect_errno) {
 			$to_print_string .= "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error . "<br>";
-		}else{
-			$to_print_string .= "CONNECTED!!!<br>";
 		}
-		echo $to_print_string;
+		echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 		return $mysqli;
 	}
     
@@ -176,7 +168,7 @@
 		    if (strlen($list[0])!=9){
 			$to_print_string .= "ERROR - SSN <b>must</b> be 9 numbers long, without '-'s.<br>You entered " . strlen($list[0]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that SSN has ONLY numbers - ASCII 48-57 NUMBERS
@@ -190,7 +182,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - SSN <b>must</b> be 9 numbers long, without '-'s.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[0], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -199,7 +191,7 @@
 		    if (strlen($list[1])>40){
 			$to_print_string .= "ERROR - Name <b>must not</b> be longer than 40 <b>letters</b>.<br>You entered " . strlen($list[1]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Cname has ONLY spaces and letters - ASCII 32 SPACE, 65-90 UPPERCASE, 97-122 LOWERCASE
@@ -221,7 +213,7 @@
 			if($temp==53){				// Verifying temp is 53 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Name <b>must</b> be ONLY letters and a space.<br>Character number " . ($i + 1) . " is '" .
 						    substr($list[1], $i, 1) . "', which is NOT a letter or a space.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -230,7 +222,7 @@
 		    if (strlen($list[2])>40){
 			$to_print_string .= "ERROR - Address <b>must not</b> be longer than 40 <b>letters</b>.<br>You entered " . strlen($list[2]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Address has ONLY spaces, numbers and letters - 32 SPACE, 48-57 NUMBERS, ASCII 65-90 UPPERCASE, 97-122 LOWERCASE
@@ -257,7 +249,7 @@
 			if($temp==63){				// Verifying temp is 63 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Address <b>must</b> be ONLY a letters, numbers and spaces.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[2], $i, 1) . "', which is NOT a letter, number or a space.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -267,7 +259,7 @@
 		    if (strlen($list[3])>10){
 			$to_print_string .= "ERROR - Phone <b>must not</b> be longer than 10 numbers.<br>You entered " . strlen($list[3]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Phone has ONLY numbers - ASCII 48-57 NUMBERS
@@ -281,7 +273,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Phone <b>must</b> be ONLY numbers, without '-'s.<br>Character number " . ($i + 1) . " is '" .
 						    substr($list[3], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -294,7 +286,7 @@
 		    if (strlen($list[0])!=9){
 			$to_print_string .= "ERROR - SSN <b>must</b> be 9 numbers long, without '-'s.<br>You entered " . strlen($list[0]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that SSN has ONLY numbers - ASCII 48-57 NUMBERS
@@ -308,7 +300,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - SSN <b>must</b> be 9 numbers long, without '-'s.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[0], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -317,7 +309,7 @@
 		    if (strlen($list[1])>40){
 			$to_print_string .= "ERROR - Name <b>must not</b> be longer than 40 <b>letters</b>.<br>You entered " . strlen($list[1]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Ename has ONLY spaces and letters - ASCII 32 SPACE, 65-90 UPPERCASE, 97-122 LOWERCASE
@@ -339,7 +331,7 @@
 			if($temp==53){				// Verifying temp is 53 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Name <b>must</b> be ONLY letters and a space.<br>Character number " . ($i + 1) . " is '" .
 						    substr($list[1], $i, 1) . "', which is NOT a letter or a space.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -348,7 +340,7 @@
 		    if (strlen($list[2])>40){
 			$to_print_string .= "ERROR - Address <b>must not</b> be longer than 40 <b>letters</b>.<br>You entered " . strlen($list[2]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Address has ONLY spaces, numbers and letters - 32 SPACE, 48-57 NUMBERS, ASCII 65-90 UPPERCASE, 97-122 LOWERCASE
@@ -375,7 +367,7 @@
 			if($temp==63){				// Verifying temp is 63 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Address <b>must</b> be ONLY a letters, numbers and spaces.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[2], $i, 1) . "', which is NOT a letter, number or a space.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -385,7 +377,7 @@
 		    if (strlen($list[3])>10){
 			$to_print_string .= "ERROR - Phone <b>must not</b> be longer than 10 numbers.<br>You entered " . strlen($list[3]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Phone has ONLY numbers - ASCII 48-57 NUMBERS
@@ -399,7 +391,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Phone <b>must</b> be ONLY numbers, without '-'s.<br>Character number " . ($i + 1) . " is '" .
 						    substr($list[3], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -408,7 +400,7 @@
 		    if (strlen($list[4])>10){
 			$to_print_string .= "ERROR - Oh COME ON! No one here makes $" . $list[4] . " per year!<br>That's more than a BILLION dollars...
 						I am <b>not</b> entering that.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Salary has ONLY numbers - ASCII 48-57 NUMBERS
@@ -422,7 +414,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Salary <b>must</b> be ONLY real numbers, without commas or decimals.<br>Character number "
 						    . ($i + 1) . " is '" . substr($list[4], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -433,7 +425,7 @@
 			// Check that VIN is 17 characters long
 		    if (strlen($list[0])!=17){
 			$to_print_string .= "ERROR - VIN <b>must</b> be 17 characters long.<br>You entered " . strlen($list[0]) . " characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that VIN has ONLY numbers - ASCII 48-57 NUMBERS
@@ -457,7 +449,7 @@
 			if($temp==62){				// Verifying temp is 62 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - VIN <b>must</b> be ONLY numbers and letters.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[0], $i, 1) . "', which is NOT a number or a letter.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -466,7 +458,7 @@
 		    if (strlen($list[1])>10){
 			$to_print_string .= "ERROR - Really? Seriously?! No car costs $" . $list[1] . "!<br>That's more than a BILLION dollars...
 						I am <b>not</b> entering that.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Price has ONLY numbers - ASCII 48-57 NUMBERS
@@ -480,7 +472,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Price <b>must</b> be ONLY real numbers, without commas or decimals.<br>Character number "
 						    . ($i + 1) . " is '" . substr($list[1], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -489,7 +481,7 @@
 		    if (strlen($list[2])>20){
 			$to_print_string .= "ERROR - Make <b>must not</b> be longer than 20 <b>letters</b>.<br>You entered " . strlen($list[2]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Make has ONLY spaces and letters - ASCII 32 SPACE, 65-90 UPPERCASE, 97-122 LOWERCASE
@@ -511,7 +503,7 @@
 			if($temp==53){				// Verifying temp is 53 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Make <b>must</b> be ONLY letters and maybe a space.<br>Character number " . ($i + 1) . " is '" .
 						    substr($list[2], $i, 1) . "', which is NOT a letter or a space.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -520,7 +512,7 @@
 		    if (strlen($list[3])>20){
 			$to_print_string .= "ERROR - Model <b>must not</b> be longer than 20 <b>letters</b>.<br>You entered " . strlen($list[3]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Model has ONLY spaces and letters - ASCII 32 SPACE, 65-90 UPPERCASE, 97-122 LOWERCASE
@@ -542,7 +534,7 @@
 			if($temp==53){				// Verifying temp is 53 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Model <b>must</b> be ONLY letters and maybe a space.<br>Character number " . ($i + 1) . " is '" .
 						    substr($list[3], $i, 1) . "', which is NOT a letter or a space.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -551,7 +543,7 @@
 		    if (strlen($list[4])>10){
 			$to_print_string .= "ERROR - Color <b>must not</b> be longer than 10 <b>letters</b>.<br>You entered " . strlen($list[4]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Color has ONLY spaces and letters - ASCII 32 SPACE, 65-90 UPPERCASE, 97-122 LOWERCASE
@@ -573,7 +565,7 @@
 			if($temp==53){				// Verifying temp is 53 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Color <b>must</b> be ONLY letters and maybe a space.<br>Character number " . ($i + 1) . " is '" .
 						    substr($list[4], $i, 1) . "', which is NOT a letter or a space.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -585,10 +577,10 @@
 		    if (strlen($list[0])>3 or strlen($list[0])<1){
 			$to_print_string .= "ERROR - Lot # <b>must</b> be between 1-3 numbers long.<br>You entered " . strlen($list[0]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
-			// Check that SSN has ONLY numbers - ASCII 48-57 NUMBERS
+			// Check that Lot # has ONLY numbers - ASCII 48-57 NUMBERS
 		    for($i=0; $i<strlen($list[0]); $i++){
 			$temp = 0;
 			for($a=48; $a<=57; $a++){ 		// Checking all NUMBERS
@@ -599,7 +591,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Lot # <b>must</b> be between 1-3 numbers long.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[0], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -608,10 +600,10 @@
 		    if (strlen($list[1])>10){
 			$to_print_string .= "ERROR - Dude... there is no way a used car dealership could house " . $list[1] . " cars!<br>That's more than a BILLION cars...
 						I am <b>not</b> entering that.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
-			// Check that Salary has ONLY numbers - ASCII 48-57 NUMBERS
+			// Check that Capacity has ONLY numbers - ASCII 48-57 NUMBERS
 		    for($i=0; $i<strlen($list[1]); $i++){
 			$temp = 0;
 			for($a=48; $a<=57; $a++){ 		// Checking all NUMBERS		- 10
@@ -622,7 +614,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Salary <b>must</b> be ONLY real numbers, without commas or decimals.<br>Character number "
 						    . ($i + 1) . " is '" . substr($list[1], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -634,7 +626,7 @@
 		    if (strlen($list[0])!=8){
 			$to_print_string .= "ERROR - Date <b>must</b> be 8 numbers long, in the form mmddyyy.<br>You entered " . strlen($list[0]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Date has ONLY numbers - ASCII 48-57 NUMBERS
@@ -648,7 +640,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Date <b>must</b> be 8 numbers long, in the form mmddyyy.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[0], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -657,7 +649,7 @@
 		    if (strlen($list[1])>10){
 			$to_print_string .= "ERROR - Really? Seriously?! No car costs $" . $list[1] . "!<br>That's more than a BILLION dollars...
 						I am <b>not</b> entering that.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Sold For has ONLY numbers - ASCII 48-57 NUMBERS
@@ -671,7 +663,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Sold For <b>must</b> be ONLY real numbers, without commas or decimals.<br>Character number "
 						    . ($i + 1) . " is '" . substr($list[1], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -679,7 +671,7 @@
 			// Check that VIN is 17 characters long
 		    if (strlen($list[2])!=17){
 			$to_print_string .= "ERROR - VIN <b>must</b> be 17 characters long.<br>You entered " . strlen($list[2]) . " characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that VIN has ONLY numbers - ASCII 48-57 NUMBERS
@@ -703,7 +695,7 @@
 			if($temp==62){				// Verifying temp is 62 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - VIN <b>must</b> be ONLY numbers and letters.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[2], $i, 1) . "', which is NOT a number or a letter.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -712,7 +704,7 @@
 		    if (strlen($list[3])!=9){
 			$to_print_string .= "ERROR - SSN <b>must</b> be 9 numbers long, without '-'s.<br>You entered " . strlen($list[3]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that SSN has ONLY numbers - ASCII 48-57 NUMBERS
@@ -726,7 +718,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - SSN <b>must</b> be 9 numbers long, without '-'s.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[3], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -738,7 +730,7 @@
 		    if (strlen($list[0])!=8){
 			$to_print_string .= "ERROR - Since <b>must</b> be 8 numbers long, in the form mmddyyy.<br>You entered " . strlen($list[0]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Since has ONLY numbers - ASCII 48-57 NUMBERS
@@ -752,7 +744,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Since <b>must</b> be 8 numbers long, in the form mmddyyy.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[0], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -761,7 +753,7 @@
 		    if (strlen($list[1])!=8){
 			$to_print_string .= "ERROR - Until <b>must</b> be 8 numbers long, in the form mmddyyy.<br>You entered " . strlen($list[1]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Until has ONLY numbers - ASCII 48-57 NUMBERS
@@ -775,7 +767,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Until <b>must</b> be 8 numbers long, in the form mmddyyy.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[1], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -787,24 +779,24 @@
 		    if($sincearr[0]>$untilarr[0]){
 			$to_print_string .= "ERROR - Since may <b>not</b> be later than Until.<br>You input that Since is " . $since . " and Until is "
 						. $until . ".<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }else if($sincearr[1]>$untilarr[1]){
 			$to_print_string .= "ERROR - Since may <b>not</b> be later than Until.<br>You input that Since is " . $since . " and Until is "
 						. $until . ".<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }else if($sincearr[2]>$untilarr[2]){
 			$to_print_string .= "ERROR - Since may <b>not</b> be later than Until.<br>You input that Since is " . $since . " and Until is "
 						. $until . ".<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 		// VIN
 			// Check that VIN is 17 characters long
 		    if (strlen($list[2])!=17){
 			$to_print_string .= "ERROR - VIN <b>must</b> be 17 characters long.<br>You entered " . strlen($list[2]) . " characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that VIN has ONLY numbers - ASCII 48-57 NUMBERS
@@ -828,7 +820,7 @@
 			if($temp==62){				// Verifying temp is 62 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - VIN <b>must</b> be ONLY numbers and letters.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[2], $i, 1) . "', which is NOT a number or a letter.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -837,7 +829,7 @@
 		    if (strlen($list[3])>3 or strlen($list[3])<1){
 			$to_print_string .= "ERROR - Lot # <b>must</b> be between 1-3 numbers long.<br>You entered " . strlen($list[3]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that SSN has ONLY numbers - ASCII 48-57 NUMBERS
@@ -851,7 +843,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Lot # <b>must</b> be between 1-3 numbers long.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[3], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -863,7 +855,7 @@
 		    if (strlen($list[0])!=8){
 			$to_print_string .= "ERROR - Since <b>must</b> be 8 numbers long, in the form mmddyyy.<br>You entered " . strlen($list[0]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that Since has ONLY numbers - ASCII 48-57 NUMBERS
@@ -877,7 +869,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Since <b>must</b> be 8 numbers long, in the form mmddyyy.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[0], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -886,7 +878,7 @@
 		    if (strlen($list[1])!=9){
 			$to_print_string .= "ERROR - SSN <b>must</b> be 9 numbers long, without '-'s.<br>You entered " . strlen($list[1]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that SSN has ONLY numbers - ASCII 48-57 NUMBERS
@@ -900,7 +892,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - SSN <b>must</b> be 9 numbers long, without '-'s.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[1], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -909,7 +901,7 @@
 		    if (strlen($list[2])>3 or strlen($list[2])<1){
 			$to_print_string .= "ERROR - Lot # <b>must</b> be between 1-3 numbers long.<br>You entered " . strlen($list[2]) .
 						" characters.<br>";
-			echo $to_print_string;
+			echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			return 1; // ERROR RETURN
 		    }
 			// Check that SSN has ONLY numbers - ASCII 48-57 NUMBERS
@@ -923,7 +915,7 @@
 			if($temp==10){				// Verifying temp is 10 - If not, then character was not within valid parameters
 			    $to_print_string .= "ERROR - Lot # <b>must</b> be between 1-3 numbers long.<br>Character number " . ($i + 1) .
 						    " is '" . substr($list[2], $i, 1) . "', which is NOT a number between 0-9.<br>";
-			    echo $to_print_string;
+			    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 			    return 1; // ERROR RETURN
 			}
 		    }
@@ -933,57 +925,164 @@
 	    }
 	    return 0; // SUCCESS RETURN
 	}
-	
+			
 	function view_data($input_type){
-	    echo "<br>Viewing Data for: " . $input_type . "<br>";
-	    echo "<br>Printing Data Now<br>";
+	    $to_print_string = "";
 	    switch ($_POST['input']){
 		case "Customer":
-		    /* Drake's code */
-		    echo "<h3>Customer View</h3>";
-		    $result = mysql_query("SELECT * FROM Customer");
-		    echo "<br />";
-		    
-		    echo "<table border='1'>";
-		    echo "<tr> <th>Customer Name</th> <th>SSN</th> <th>Phone</th> <th>Address</th> </tr>";
-		    // keeps getting the next row until there are no more to get
-		    while($row = mysqli_fetch_array( $result )) {
-			    // Print out the contents of each row into a table
-			    
-			    echo "<tr><td>";
-			    echo $row['cname'];
-			    echo "</td><td>";
-			    echo $row['ssn'];
-			    echo "</td><td>";
-			    echo $row['phone'];
-			    echo "</td><td>";
-			    echo $row['address'];
-			    echo "</td></tr>";
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ( !($stmt = $mysqli->prepare("SELECT ssn, cname, address, phone FROM Customers") ) ) {
+			    $to_print_string .=  "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 		    }
-		    /* Display results */
-                   break;
+		    if (!$stmt->execute()) {
+			    $to_print_string .=  "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		    } 
+		    if (!$stmt->bind_result($ssn, $cname, $address, $phone)){
+			    $to_print_string .=  "Error binding result: (" . $stmt->errno . ") " . $stmt->error;
+		    }
+		    else {
+			    $to_print_string .= "<table>";
+			    $to_print_string .= "<tr><td><b>SSN</b></td><td><b>Name</b></td><td><b>Address</b></td><td><b>Phone</b></td></tr>";
+			    while ($stmt->fetch()){
+				    $to_print_string .= "<tr><td>".$ssn."</td><td>".$cname."</td><td>".$address."</td><td>".$phone."</td></tr>";
+			    }
+			    $to_print_string .= "</table>";
+		    }
+		    break;
 		case "Employee":
-		    echo "Employee View";
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ( !($stmt = $mysqli->prepare("SELECT ssn, ename, address, phone, salary FROM Employees") ) ) {
+			    $to_print_string .= "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+		    }
+		    if (!$stmt->execute()) {
+			    $to_print_string .= "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		    } 
+		    if (!$stmt->bind_result($ssn, $ename, $address, $phone, $salary)){
+			    $to_print_string .= "Error binding result: (" . $stmt->errno . ") " . $stmt->error;
+		    }
+		    else {
+			    $to_print_string .= "<table>";
+			    $to_print_string .= "<tr><td><b>SSN</b></td><td><b>Name</b></td><td><b>Address</b></td><td><b>Phone</b></td><td><b>Salary</b></td></tr>";
+			    while ($stmt->fetch()){
+				    $to_print_string .= "<tr><td>".$ssn."</td><td>".$ename."</td><td>".$address."</td><td>".$phone."</td><td>".$salary."</td></tr>";
+			    }
+			    $to_print_string .= "</table>";
+		    }
 		    break;
 		case "Car":
-		    echo "Car View";
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ( !($stmt = $mysqli->prepare("SELECT vin, price, make, model, color FROM Cars") ) ) {
+			    $to_print_string .= "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+		    }
+		    if (!$stmt->execute()) {
+			    $to_print_string .= "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		    } 
+		    if (!$stmt->bind_result($vin, $price, $make, $model, $color)){
+			    $to_print_string .= "Error binding result: (" . $stmt->errno . ") " . $stmt->error;
+		    }
+		    else {
+			    $to_print_string .= "<table>";
+			    $to_print_string .= "<tr><td><b>VIN</b></td><td><b>Price</b></td><td><b>Make</b></td><td><b>Model</b></td><td><b>Color</b></td></tr>";
+			    while ($stmt->fetch()){
+				    $to_print_string .= "<tr><td>".$vin."</td><td>".$price."</td><td>".$make."</td><td>".$model."</td><td>".$color."</td></tr>";
+			    }
+			    $to_print_string .= "</table>";
+		    }
 		case "Lot":
-		    echo "Lot View";
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ( !($stmt = $mysqli->prepare("SELECT lot_num, capacity FROM Lots") ) ) {
+			    $to_print_string .= "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+		    }
+		    if (!$stmt->execute()) {
+			    $to_print_string .= "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		    } 
+		    if (!$stmt->bind_result($lot_num, $capacity)){
+			    $to_print_string .= "Error binding result: (" . $stmt->errno . ") " . $stmt->error;
+		    }
+		    else {
+			    $to_print_string .= "<table>";
+			    $to_print_string .= "<tr><td><b>Lot #</b></td><td><b>Capacity</b></td></tr>";
+			    while ($stmt->fetch()){
+				    $to_print_string .= "<tr><td>".$lot_num."</td><td>".$capacity."</td></tr>";
+			    }
+			    $to_print_string .= "</table>";
+		    }
 		    break;
 		case "Purchased":
-		    echo "Purchased View";
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ( !($stmt = $mysqli->prepare("SELECT date, sold_for, vin, ssn FROM Purchased") ) ) {
+			    $to_print_string .= "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+		    }
+		    if (!$stmt->execute()) {
+			    $to_print_string .= "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		    } 
+		    if (!$stmt->bind_result($date, $sold_for, $vin, $ssn)){
+			    $to_print_string .= "Error binding result: (" . $stmt->errno . ") " . $stmt->error;
+		    }
+		    else {
+			    $to_print_string .= "<table>";
+			    $to_print_string .= "<tr><td><b>Date</b></td><td><b>Sold For</b></td><td><b>VIN</b></td><td><b>SSN</b></td></tr>";
+			    while ($stmt->fetch()){
+				    $to_print_string .= "<tr><td>".$date."</td><td>".$sold_for."</td><td>".$vin."</td><td>".$ssn."</td></tr>";
+			    }
+			    $to_print_string .= "</table>";
+		    }
 		    break;
 		case "Stored In":
-		    echo "Stored In View";
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ( !($stmt = $mysqli->prepare("SELECT since, until, vin, lot_num FROM Stored_In") ) ) {
+			    $to_print_string .= "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+		    }
+		    if (!$stmt->execute()) {
+			    $to_print_string .= "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		    } 
+		    if (!$stmt->bind_result($since, $until, $vin, $lot_num)){
+			    $to_print_string .= "Error binding result: (" . $stmt->errno . ") " . $stmt->error;
+		    }
+		    else {
+			    $to_print_string .= " Result has this many results" . $result->num_rows;
+			    $to_print_string .= "<table>";
+			    $to_print_string .= "<tr><td><b>Since</b></td><td><b>Until</b></td><td><b>VIN</b></td><td><b>Lot #</b></td></tr>";
+			    while ($stmt->fetch()){
+				    $to_print_string .= "<tr><td>".$since."</td><td>".$until."</td><td>".$vin."</td><td>".$lot_num."</td></tr>";
+			    }
+			    $to_print_string .= "</table>";
+		    }
 		    break;
 		case "Works In":
-		    echo "Works In View";
+		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
+		    $mysqli = connect();
+		    if ( !($stmt = $mysqli->prepare("SELECT since, ssn, lot_num FROM Works_In") ) ) {
+			    $to_print_string .= "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+		    }
+		    if (!$stmt->execute()) {
+			    $to_print_string .= "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		    } 
+		    if (!$stmt->bind_result($since, $ssn, $lot_num)){
+			    $to_print_string .= "Error binding result: (" . $stmt->errno . ") " . $stmt->error;
+		    }
+		    else {
+			    $to_print_string .= "<table>";
+			    $to_print_string .= "<tr><td><b>Since</b></td><td><b>SSN</b></td><td><b>Lot #</b></td></tr>";
+			    while ($stmt->fetch()){
+				    $to_print_string .= "<tr><td>".$since."</td><td>".$ssn."</td><td>".$lot_num."</td></tr>";
+			    }
+			    $to_print_string .= "</table>";
+		    }
 		    break;
 	    }
+	    
+	    // Send the finished string to a javascript funciton to be printed to the 'resultstable' span
+	    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 	}
 	
 	function insert_data($input_type){
-	    echo "<br>Inserting Data for: " . $input_type . "<br>";
 	    $to_print_string = "";
 	    switch ($_POST['input']){
 		case "Customer":			// Add info to Customer
@@ -1139,12 +1238,10 @@
 		    }
 		    break;
 	    }
-	    echo $to_print_string;
+	    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
 	}
 	
 	function delete_data($input_type){
-	    echo "<br>Deleting Data for: " . $input_type . "<br>";
-	    echo "<br>Printing Data Now<br>";
 	    switch ($_POST['input']){
 		case "Customer":
 		    $query = "";
