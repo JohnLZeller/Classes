@@ -1,19 +1,25 @@
 <!DOCTYPE HTML>
-<!-- Things to add
- *	Make empty values that come from view, a string called '<i>null</i>'
- *	guidelinestable.innerHTML works
- *	resultstable.innerHTML works
--->
 
-<!-- Deleting things works like this
- * When you select delete, show a view of the table, along with guidelines on how to delete
- * Look at things in the table and determine what you would like to delete by
- * Warning: You may only delete ONE item at a time. And only when selected by the primary key
--->
-
-
-<!-- List all the necessary functions within this code
--->
+<!-- ===============================================================
+ * Filename: process.php
+ * Author: John Zeller
+ * Date Created: November 10, 2012
+ * Recently Updated: November 29, 2012
+ * ------
+ * Functions present:
+ * 	connect() 			- Establishes a connection with the SQL database and return a $mysqli object
+ * 	sanitize($input) 		- Used to verify the format of the information being entered into a form before
+ *					    submitting anything to the SQL database (Currently this only supports checking of insert info)
+ * 	view_data($input_type) 		- Generates a table to be placed in the resultstable HTML span which contains a
+ *					    formatted visualization of all data in your specified data table
+ * 	insert_data($input_type) 	- Uses information gathered from an html form to insert data into your specified
+ *					    data table, it then prints the resulting error/success information in the infotable HTML span
+ * 	delete_data($input_type) 	- Uses information gathered from an html form to delete data from your specified
+ *					    data table, it then prints the resulting error/success information in the infotable HTML span
+ * ------
+ * Notes:
+ * 
+ * ============================================================= -->
 
 <html>
 
@@ -27,8 +33,6 @@
 </head>
 
 <body>
-
-	<!-- On load set first table value to '' -->
 
 	<div id="main">
 		<div id="title"><h1>John & Drake's Used Car Lot</h1></div>
@@ -264,9 +268,10 @@
 				<div style="font-size:10px;"><br>WARNING: Input of information to the database is reserved for authorized personnel ONLY!</div>
 			</div>
 
-			<div id="results"><span id="resultstable"></span></div>
+			<div id="results"><span id="infotable"></span><br><br><span id="resultstable"></span></div>
 		</div>
 	</div>
+
 
 <!-- PHP goes here -->
     <!-- The SQL parser that gives all the necessary functionality to the database application -->
@@ -290,12 +295,14 @@
 			break;
 		    case "Insert":
 			insert_data($_POST['input']);
+			view_data($_POST['input']);
 			break;
 		    case "Delete":
 			view_data($_POST['input']);
 			break;
 		    case "Delete_Now":
 			delete_data($_POST['input']);
+			view_data($_POST['input']);
 			break;
 		    default:
 			break;
@@ -1202,7 +1209,6 @@
 			    $to_print_string .= "Error binding result: (" . $stmt->errno . ") " . $stmt->error;
 		    }
 		    else {
-			    $to_print_string .= " Result has this many results" . $result->num_rows;
 			    $to_print_string .= "<table>";
 			    $to_print_string .= "<tr><td><b>Since</b></td><td><b>Until</b></td><td><b>VIN</b></td><td><b>Lot #</b></td></tr>";
 			    while ($stmt->fetch()){
@@ -1242,9 +1248,7 @@
 	    $to_print_string = "";
 	    switch ($_POST['input']){
 		case "Customer":			// Add info to Customer
-		    $query = "";
 		    $list = array($_POST['ssn'], $_POST['cname'], $_POST['address'], $_POST['phone']);
-		    
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
 		    if ($list[0] != ''){ // Make sure that the primary key SSN exists
@@ -1262,9 +1266,7 @@
 		    }
 		    break;
 		case "Employee":			// Add info to Employee
-		    $query = "";
 		    $list = array($_POST['ssn'], $_POST['ename'], $_POST['address'], $_POST['phone'], $_POST['salary']);
-		    
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
 		    if ($list[0] != ''){ // Make sure that the primary key SSN exists
@@ -1282,9 +1284,7 @@
 		    }
 		    break;
 		case "Car":				// Add info to Car
-		    $query = "";
 		    $list = array($_POST['vin'], $_POST['price'], $_POST['make'], $_POST['model'], $_POST['color']);
-		    
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
 		    if ($list[0] != ''){ // Make sure that the primary key SSN exists
@@ -1302,9 +1302,7 @@
 		    }
 		    break;
 		case "Lot":				// Add info to Lot
-		    $query = "";
 		    $list = array($_POST['lot_num'], $_POST['capacity']);
-		    
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
 		    if ($list[0] != ''){ // Make sure that the primary key SSN exists
@@ -1322,12 +1320,10 @@
 		    }
 		    break;
 		case "Purchased":			// Add info to Purchased
-		    $query = "";
 		    $list = array($_POST['date'], $_POST['sold_for'], $_POST['vin'], $_POST['ssn']);
-		    
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
-		    if (($list[2] != '') || ($list[3] != '')){ // Make sure that the primary key SSN exists
+		    if (($list[2] != '') and ($list[3] != '')){ // Make sure that the primary key SSN exists
 			if ( !($stmt = $mysqli->prepare("INSERT INTO Purchased(date, sold_for, vin, ssn)" .
 							" VALUES ('" . $list[0] . "', '" . $list[1] . "', '" . $list[2] . "', '" . $list[3] . "');") ) ) {
 			    $to_print_string .= "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error . "<br>";
@@ -1346,12 +1342,10 @@
 		    }
 		    break;
 		case "Stored In":			// Add info to Stored In
-		    $query = "";
 		    $list = array($_POST['since'], $_POST['until'], $_POST['vin'], $_POST['lot_num']);
-		    
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
-		    if (($list[2] != '') || ($list[3] != '')){ // Make sure that the primary key SSN exists
+		    if (($list[2] != '') and ($list[3] != '')){ // Make sure that the primary key SSN exists
 			if ( !($stmt = $mysqli->prepare("INSERT INTO Stored_In(since, until, vin, lot_num)" .
 							" VALUES ('" . $list[0] . "', '" . $list[1] . "', '" . $list[2] . "', '" . $list[3] . "');") ) ) {
 			    $to_print_string .= "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error . "<br>";
@@ -1370,12 +1364,10 @@
 		    }
 		    break;
 		case "Works In":			// Add info to Works In
-		    $query = "";
 		    $list = array($_POST['since'], $_POST['ssn'], $_POST['lot_num']);
-		    
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
-		    if (($list[1] != '') || ($list[2] != '')){ // Make sure that the primary key SSN exists
+		    if (($list[1] != '') and ($list[2] != '')){ // Make sure that the primary key SSN exists
 			if ( !($stmt = $mysqli->prepare("INSERT INTO Works_In(since, ssn, lot_num)" .
 							" VALUES ('" . $list[0] . "', '" . $list[1] . "', '" . $list[2] . "');") ) ) {
 			    $to_print_string .= "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error . "<br>";
@@ -1394,15 +1386,13 @@
 		    }
 		    break;
 	    }
-	    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
+	    echo "<script language=javascript>updateInfo('" . $to_print_string . "')</script><br><br><br><br>";
 	}
 	
 	function delete_data($input_type){
 	    $to_print_string = "";
 	    switch ($_POST['input']){
-		case "Customer":		// Search for ssn in Customers table and delete that
-		    $query = "";
-		    
+		case "Customer":
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
 		    if ($_POST['ssn'] != ''){ // Make sure that the primary key SSN exists
@@ -1421,9 +1411,7 @@
 			$to_print_string .= "Missing Primary Key SSN!<br>";
 		    }
 		    break;
-		case "Employee":			// Add info to Employee
-		    $query = "";
-		    
+		case "Employee":
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
 		    if ($_POST['ssn'] != ''){ // Make sure that the primary key SSN exists
@@ -1442,9 +1430,7 @@
 			$to_print_string .= "Missing Primary Key SSN!<br>";
 		    }
 		    break;
-		case "Car":				// Add info to Car
-		    $query = "";
-		    
+		case "Car":
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
 		    if ($_POST['vin'] != ''){ // Make sure that the primary key SSN exists
@@ -1463,9 +1449,7 @@
 			$to_print_string .= "Missing Primary Key VIN!<br>";
 		    }
 		    break;
-		case "Lot":				// Add info to Lot
-		    $query = "";
-		    
+		case "Lot":
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
 		    if ($_POST['lot_num'] != ''){ // Make sure that the primary key SSN exists
@@ -1488,9 +1472,7 @@
 		
 		
 		
-		case "Purchased":			// Add info to Purchased
-		    $query = "";
-		    
+		case "Purchased":
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
 		    if ($_POST['vin'] != '' and $_POST['ssn'] != ''){ // Make sure that the primary keys VIN and SSN exist
@@ -1513,9 +1495,7 @@
 			}
 		    }
 		    break;
-		case "Stored In":			// Add info to Stored In
-		    $query = "";
-		    
+		case "Stored In":
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
 		    if ($_POST['vin'] != '' and $_POST['lot_num'] != ''){ // Make sure that the primary keys VIN and Lot # exist
@@ -1538,9 +1518,7 @@
 			}
 		    }
 		    break;
-		case "Works In":			// Add info to Works In
-		    $query = "";
-		    
+		case "Works In":
 		    /* MUST FIRST CONNECT TO DATABASE WITHIN THIS SCOPE BEFORE INSERTING TO DATABASE */
 		    $mysqli = connect();
 		    if ($_POST['ssn'] != '' and $_POST['lot_num'] != ''){ // Make sure that the primary keys SSN and Lot # exist
@@ -1564,7 +1542,7 @@
 		    }
 		    break;
 	    }
-	    echo "<script language=javascript>updateResult('" . $to_print_string . "')</script><br><br><br><br>";
+	    echo "<script language=javascript>updateInfo('" . $to_print_string . "')</script><br><br><br><br>";
 	}
 	
 	

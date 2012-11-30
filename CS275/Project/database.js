@@ -1,5 +1,19 @@
-// Things to add:
-// Add error checking of submit form ON the client-side in the js
+// ===============================================================
+// * Filename: database.js
+// * Author: John Zeller
+// * Date Created: November 10, 2012
+// * Recently Updated: November 29, 2012
+// * ------
+// * Functions present:
+// * 	OnChoice(data) 		- Generates a dropdown selection menu for choosing which table you would like to use for your modification type
+// * 	OnChange_Insert(data) 	- Generates a form based on your table of choice for inserting information and also provides guidelines for formatting that information
+// * 	OnChange_Delete(data) 	- Generates a form based on your table of choice for deleting information and also provides guidelines for formatting that information
+// * 	updateResult(data) 	- Used by the PHP to update the resultstable HTML span which is used to display database information based on your current query
+// * 	updateInfo(data) 	- Used by the PHP to update the infotabletable HTML span which is used to display information pertaining to your current query
+// * ------
+// * Notes:
+// * 
+// * =============================================================
 
 
 
@@ -480,4 +494,8 @@ function OnChange_Delete(data){
 
 function updateResult(data){
 	resultstable.innerHTML = data;
+}
+
+function updateInfo(data){
+	infotable.innerHTML = data;
 }
