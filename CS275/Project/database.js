@@ -1,6 +1,6 @@
 // ===============================================================
 // * Filename: database.js
-// * Author: John Zeller
+// * Author: John Zeller & Drake Bridgewater
 // * Date Created: November 10, 2012
 // * Recently Updated: November 29, 2012
 // * ------
@@ -28,7 +28,7 @@ function OnChoice(data){
 	if(data==''){
 		input_by.innerHTML = ""
 		input_form.innerHTML = ""
-		guidelinestable.innerHTML = ""
+		resultstable.innerHTML = ""
 	}else if(data=='View'){
 		input_form.innerHTML = ""
 		input_by.innerHTML = "<br><br>														\
@@ -68,7 +68,7 @@ function OnChoice(data){
 				<input type='hidden' name='input' value='Works In'>									\
 				<input type='submit' name='customer_view' value='Works_In'>								\
 			</form><br>"
-		guidelinestable.innerHTML = ""
+		resultstable.innerHTML = ""
 	}
 	else if(data=='Insert'){
 		input_form.innerHTML = ""
@@ -84,7 +84,7 @@ function OnChoice(data){
 				<option value='Stored In'>Stored In</option>				\
 				<option value='Works In'>Works In</option>				\
 			</select>"
-		guidelinestable.innerHTML = ""
+		resultstable.innerHTML = ""
 	}else if(data=='Delete'){
 		input_form.innerHTML = ""
 		input_by.innerHTML = "<br><br>														\
@@ -124,7 +124,7 @@ function OnChoice(data){
 				<input type='hidden' name='input' value='Works In'>									\
 				<input type='submit' name='customer_view' value='Works_In'>								\
 			</form><br>"
-		guidelinestable.innerHTML = ""
+		resultstable.innerHTML = ""
 	}
 }
 
@@ -143,7 +143,7 @@ function OnChange_Insert(data){
 				Phone #:<br><input type='text' name='phone'><br><br>			\
 				<input name='customer' type='submit' value='Submit'>			\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Inserting info into Customers table</h2></center>		\
+		resultstable.innerHTML = "<center><h2>Guidelines for Inserting info into Customers table</h2></center>		\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>							\
 				<font color='red'>WARNING: Primary Key - SSN <b>must not</b> match a valid customer ssn already \
 					in the database</font><br>								\
@@ -176,7 +176,7 @@ function OnChange_Insert(data){
 				Salary:<br><input type='text' name='salary'><br><br>			\
 				<input name='employee' type='submit' value='Submit'>			\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Inserting info into Employees table</h2></center>		\
+		resultstable.innerHTML = "<center><h2>Guidelines for Inserting info into Employees table</h2></center>		\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>							\
 				<font color='red'>WARNING: Primary Key - SSN <b>must not</b> match a valid employee ssn already \
 					in the database</font><br>								\
@@ -212,7 +212,7 @@ function OnChange_Insert(data){
 				Color:<br><input type='text' name='color'><br><br>			\
 				<input name='car' type='submit' value='Submit'>				\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Inserting info into Cars table</h2></center>		\
+		resultstable.innerHTML = "<center><h2>Guidelines for Inserting info into Cars table</h2></center>		\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>							\
 				<font color='red'>WARNING: Primary Key - VIN <b>must not</b> match a valid car VIN already in	\
 					the database</font><br>									\
@@ -245,7 +245,7 @@ function OnChange_Insert(data){
 				Capacity:<br><input type='text' name='capacity'><br><br>		\
 				<input name='lot' type='submit' value='Submit'>				\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Inserting info into Lots table</h2></center>		\
+		resultstable.innerHTML = "<center><h2>Guidelines for Inserting info into Lots table</h2></center>		\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>							\
 				<font color='red'>WARNING: Primary Key - Lot # <b>must not</b> match a valid lot # already in	\
 					the database</font><br>									\
@@ -268,7 +268,7 @@ function OnChange_Insert(data){
 				Customer SSN<font color='red'>*</font>:<br><input type='text' name='ssn'><br><br>			\
 				<input name='purchased' type='submit' value='Submit'>			\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Inserting info into Purchased table</h2></center>		\
+		resultstable.innerHTML = "<center><h2>Guidelines for Inserting info into Purchased table</h2></center>		\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>							\
 				<font color='red'>WARNING: Foreign Constraint - VIN <b>must</b> match a valid car already in	\
 					the database and SSN <b>must</b> match a valid customer already in the database.	\
@@ -300,7 +300,7 @@ function OnChange_Insert(data){
 				Date Until:<br><input type='text' name='until'><br><br>			\
 				<input name='stored_in' type='submit' value='Submit'>			\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Inserting info into Stored In table</h2></center>		\
+		resultstable.innerHTML = "<center><h2>Guidelines for Inserting info into Stored In table</h2></center>		\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>							\
 				<font color='red'>WARNING: Foreign Constraint - VIN <b>must</b> match a valid car already in	\
 					the database and Lot # <b>must</b> match a valid lot already in the database.		\
@@ -333,7 +333,7 @@ function OnChange_Insert(data){
 				Date Since:<br><input type='text' name='since'><br><br>			\
 				<input name='works_in' type='submit' value='Submit'>			\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Inserting info into Works In table</h2></center>		\
+		resultstable.innerHTML = "<center><h2>Guidelines for Inserting info into Works In table</h2></center>		\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>							\
 				<font color='red'>WARNING: Foreign Constraint - VIN <b>must</b> match a valid car already in	\
 					the database and Lot # <b>must</b> match a valid lot already in the database.		\
@@ -365,7 +365,7 @@ function OnChange_Delete(data){
 				SSN<font color='red'>*</font>:<br><input type='text' name='ssn'><br><br>			\
 				<input name='customer' type='submit' value='Submit'>						\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Deleting info from Customers table</h2></center>	\
+		resultstable.innerHTML = "<center><h2>Guidelines for Deleting info from Customers table</h2></center>	\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				\
 				<font color='red'>WARNING: Primary Key - SSN <b>must not</b> match a valid customer ssn already \
 					in the database</font><br>								\
@@ -382,7 +382,7 @@ function OnChange_Delete(data){
 				SSN<font color='red'>*</font>:<br><input type='text' name='ssn'><br><br>			\
 				<input name='employee' type='submit' value='Submit'>						\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Deleting info from Employees table</h2></center>	\
+		resultstable.innerHTML = "<center><h2>Guidelines for Deleting info from Employees table</h2></center>	\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				\
 				<font color='red'>WARNING: Primary Key - SSN <b>must not</b> match a valid employee ssn already \
 					in the database</font><br>								\
@@ -398,7 +398,7 @@ function OnChange_Delete(data){
 				VIN<font color='red'>*</font>:<br><input type='text' name='vin'><br><br>			\
 				<input name='car' type='submit' value='Submit'>							\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Deleting info from Cars table</h2></center>		\
+		resultstable.innerHTML = "<center><h2>Guidelines for Deleting info from Cars table</h2></center>		\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				\
 				<font color='red'>WARNING: Primary Key - VIN <b>must not</b> match a valid car VIN already in	\
 					the database</font><br>									\
@@ -414,7 +414,7 @@ function OnChange_Delete(data){
 				Lot #:<br><input type='text' name='lot_num'><br><br>						\
 				<input name='lot' type='submit' value='Submit'>							\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Deleting info from Lots table</h2></center>		\
+		resultstable.innerHTML = "<center><h2>Guidelines for Deleting info from Lots table</h2></center>		\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				\
 				<font color='red'>WARNING: Primary Key - Lot # <b>must not</b> match a valid lot # already in	\
 					the database</font><br>									\
@@ -431,7 +431,7 @@ function OnChange_Delete(data){
 				Customer SSN<font color='red'>*</font>:<br><input type='text' name='ssn'><br><br>		\
 				<input name='purchased' type='submit' value='Submit'>						\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Deleting info from Purchased table</h2></center>	\
+		resultstable.innerHTML = "<center><h2>Guidelines for Deleting info from Purchased table</h2></center>	\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				\
 				<font color='red'>WARNING: Foreign Constraint - VIN <b>must</b> match a valid car already in	\
 					the database and SSN <b>must</b> match a valid customer already in the database.	\
@@ -453,7 +453,7 @@ function OnChange_Delete(data){
 				Lot #<font color='red'>*</font>:<br><input type='text' name='lot_num'><br><br>			\
 				<input name='stored_in' type='submit' value='Submit'>						\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Deleting info from Stored In table</h2></center>	\
+		resultstable.innerHTML = "<center><h2>Guidelines for Deleting info from Stored In table</h2></center>	\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				\
 				<font color='red'>WARNING: Foreign Constraint - VIN <b>must</b> match a valid car already in	\
 					the database and Lot # <b>must</b> match a valid lot already in the database.		\
@@ -475,7 +475,7 @@ function OnChange_Delete(data){
 				Employee SSN<font color='red'>*</font>:<br><input type='text' name='ssn'><br><br>		\
 				<input name='works_in' type='submit' value='Submit'>						\
 			</form>"
-		guidelinestable.innerHTML = "<center><h2>Guidelines for Deleting info from Works In table</h2></center>		\
+		resultstable.innerHTML = "<center><h2>Guidelines for Deleting info from Works In table</h2></center>		\
 				<font color='red'>*</font> = <font color='red'>REQUIRED</font><br>				\
 				<font color='red'>WARNING: Foreign Constraint - VIN <b>must</b> match a valid car already in	\
 					the database and Lot # <b>must</b> match a valid lot already in the database.		\
