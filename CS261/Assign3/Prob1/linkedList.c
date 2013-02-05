@@ -1,3 +1,8 @@
+/* Name: John Zeller
+ * Date: 2/4/13
+ * Development Environment: Xcode 4.1
+ */
+
 #include "linkedList.h"
 #include <assert.h>
 #include <stdlib.h>
