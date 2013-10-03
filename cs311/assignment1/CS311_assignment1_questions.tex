@@ -1,0 +1,65 @@
+% CS311_assignment1_questions.tex - Questions for Assignment 1
+
+\documentclass[12pt, letterpaper]{article}
+\usepackage{anysize}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\marginsize{2cm}{2cm}{1cm}{1cm}
+
+\begin{document}
+
+\begin{titlepage}
+	\title{Assignment 1}
+		\author{John Zeller\\
+		  CS 311}
+		\date{\today}
+	\maketitle
+\end{titlepage}
+
+\section{Questions}
+\begin{enumerate}
+	\item Describe at least 2 ways of transferring files from a remote server to a local machine. \hfill
+		\begin{itemize}
+			\item Secure Copy (SCP), which utilizes Secure Shell (SSH), is 1 way of tranferring files from a remote server to a local machine, or vice versa.
+			\item File Transfer Protocol (FTP) is another way, which transfers files over a TCP-based network.
+		\end{itemize}
+	\item What are revision control systems? Why are they useful? Explain how to create a subversion or git repository on os-class (and create it, while you're at it). \hfill
+		\begin{itemize}
+			\item Revision control systems (VCS) are systems which manage, track and store the changes to documents, programs, etc. Filechanges are typically tracked by being assigned a revision number, which corresponds to a subset of file changes and is enumerated with each new commit.
+			\item In software engineering, revision control is useful for tracking source code, configuration files, as well as documentation. This helps software developers and other users by providing a record of changes that show how a body of work has evolved. Also, if an error occures, it is trivial to simply revert back to a stable state.
+			\item In order to create a git repository on os-class you must first open a Terminal and ssh into username@os-class.engr.oregonstate.edu. Then run the following commands (NOTE: I am initializing a bare repo on os-class so that I can clone it to my local machine and add/commit/push from my local to the remote):
+			\begin{lstlisting}[xleftmargin=-30.0ex]
+			git init --bare cs311.git
+			git config receive.denyCurrentBranch ignore
+			\end{lstlisting}
+			\item In a new Terminal tab on your local machine, run the following commands to clone and initialize the repository you just created:
+			\begin{lstlisting}[xleftmargin=-30.0ex]
+			git clone username:os-class.engr.oregonstate.edu:~/cs311.git
+			cd cs311
+			touch README
+			git add README
+			git commit -m "Initial commit"
+			git push origin master
+			\end{lstlisting}
+		\end{itemize}
+	\item What is the difference between redirecting and piping? Describe each. \hfill
+		\begin{itemize}
+			\item Redirect, \verb|>| or \verb|<|, is used to pass output to a file or stream.
+			\item Pipe, |, is used to pass output to a program or utility.
+			\item Simply put, | is more or less a shortcut. For example, thing1 | thing2 is synonymous to thing1 \verb|>| temp \verb|&&| thing2 \verb|<| temp \\\\\\
+		\end{itemize}
+	\item What is make, and how is it useful? \hfill
+		\begin{itemize}
+			\item Make is a utility that automatically builds executable programs and libraries by automatically determining which pieces of a large program need to be recompiled, and issuing the commands to recompile them. Make is useful because it automates the process of tracking changes in a program, and only compiling those changes. Additionally, make automates the compiling and linking of large programs, removing the need to write long cumbersome scripts to accomplish the same thing.
+		\end{itemize}
+	\item Describe, in detail, the syntax of a make file. \hfill
+		\begin{itemize}
+			\item The syntax of a makefile consists of targets, dependencies, flags, variables and scripts. Targets have dependancies, which may be another file or target, and are checked when a target is called. Once all targets and dependancies are called, then the the makefile will call specified scripts. There are various flags and variables, some of which are CC, CXX, CFLAGS, CXXFLAGS, LDFLAGS; the CC variable represents the type of compiler for make to use when compiling C programs; the CXX variable represents the type of compiler for make to use when compiling C++ programs; CFLAGS can be set to specify additional switches to be passed to a C compiler; CXXFLAGS can be set to specify additional switches to be passed to a C++ compiler; and LDFLAGS are used for linking libraries.
+		\end{itemize}
+	\item Give a find command that will run the file command on every regular file (not directories!) within the current filesystem subtree. \hfill
+		\begin{itemize}
+			\item \verb|find . -type f -exec file '{}' \;|
+		\end{itemize}
+\end{enumerate}
+		
+\end{document}
