@@ -129,7 +129,17 @@ def names():
 
 
 def nthTerm():
-    print "yay"
+    with open('words.txt') as f:
+        wordsList = sorted([word.split('"')[1] for word in f.read().split(',')])
+    sumList = []
+    for word in wordsList:
+        sumList.append(sum([ord(char) - 96 for char in word.lower()]))
+    triangleList = []
+    for index, s in enumerate(sumList):
+        for x in range(s+1):
+            if s is int(0.5*x*(x+1)):\
+                triangleList.append(wordsList[index])
+    print len(triangleList)
 
 if __name__ == '__main__':
     main()
