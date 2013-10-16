@@ -1,0 +1,149 @@
+% integral.tex - Recreation of the surface_integral.pdf doc
+
+\documentclass[10pt, letterpaper]{article}
+\usepackage{anysize}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{MnSymbol}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{esint}
+\usepackage[fleqn]{nccmath}
+\usepackage[T1]{fontenc}
+\newcommand{\q}[1]{``#1''}
+\numberwithin{equation}{section}
+\setlength\parindent{0pt}
+\marginsize{2.5cm}{2.5cm}{.75cm}{.75cm}
+
+\begin{document}
+
+\thispagestyle{empty}
+\pagestyle{empty}
+\section*{Surface Integral}
+\renewcommand\thesection{1}
+\hrulefill \newline
+
+\begin{fleqn}
+For a scalar function $f$ over a surface parameterized by $u$ and $v$, the surface integral is given by \newline
+
+\begin{equation}
+\Phi = \int_S f \: \mathrm{d}a
+\end{equation}
+
+\begin{equation}
+\:\:\;\; = \int_S f(u,v)|{\bf T}_u \times {\bf T}_u| \, \mathrm{d}u \, \mathrm{d}v
+\end{equation} \newline
+
+where ${\bf T}_u$ and ${\bf T}_v$ are tangent vectors and $a \times b$ is the cross product. \newline
+
+For a vector function over a surface, the surface integral is given by \newline
+
+\begin{equation}
+\Phi = \int_S {\bf F} \cdot \mathrm{d{\bf a}}
+\end{equation}
+
+\begin{equation}
+\:\:\;\; = \int_S ({\bf F} \cdot {\bf \hat{n}}) \: \mathrm{d}a
+\end{equation}
+
+\begin{equation}
+\:\:\;\; = \int_S f_x \, \mathrm{d}y \, \mathrm{d}z + f_y \, \mathrm{d}z \, \mathrm{d}x + f_z \, \mathrm{d}x \, \mathrm{d}y
+\end{equation} \newline
+
+where ${\bf a \cdot b}$ is a dot product and ${\bf \hat{n}}$ is a unit normal vector. If $z=f(x, y)$, the $\mathrm{d{\bf a}}$ is given explicitly by \newline
+
+\begin{equation}
+\mathrm{d{\bf a}} = \pm \bigg(-\frac{\partial z}{\partial x}{\bf \hat{x}} - \frac{\partial z}{\partial y}{\bf \hat{y}} + {\bf \hat{z}}\bigg) \, dx \, dy
+\end{equation} \newline
+
+If the surface is {\it surface parameterized} using $u$ and $v$, then \newline
+
+\begin{equation}
+\Phi = \int_S {\bf F} \cdot ({\bf T}_u \times {\bf T}_u) \, du \, dv.
+\end{equation}
+\end{fleqn} \newpage
+
+\renewcommand\thesection{2}
+\begin{figure}
+\section*{Maxwell's Equations}
+\hrulefill \newline
+
+\centering
+\includegraphics[scale=0.44]{maxwell.eps}
+\end{figure}
+
+\begin{fleqn}
+{\bf \large Integral form}
+
+\begin{equation}
+\oiint\limits_{\partial\Omega} {\bf E} \cdot d{\bf S} = \frac{1}{\varepsilon_0} \iiint\limits_{\Omega} \, \rho \, \mathrm{d}V
+\end{equation}
+
+\begin{equation}
+\oiint\limits_{\partial\Omega} {\bf B} \cdot \mathrm{d}{\bf S} = 0
+\end{equation}
+
+\begin{equation}
+\oint_{\partial\Sigma} {\bf E} \cdot \mathrm{d}\ell = -\frac{d}{dt} \iint\limits_{\Sigma} \, {\bf B} \cdot \mathrm{d}{\bf S}
+\end{equation}
+
+\begin{equation}
+\oint_{\partial\Sigma} {\bf B} \cdot \mathrm{d}\ell = \mu_0 \iint\limits_{\Sigma} \, \bigg( {\bf J} + \varepsilon_0 \frac{\partial {\bf E}}{\partial t} \bigg) \cdot \mathrm{d{\bf S}}
+\end{equation} \newline
+\end{fleqn}
+
+\begin{fleqn}
+{\bf \large Differential form}
+
+\begin{equation}
+\medtriangledown \cdot {\bf E} = \frac{\rho}{\varepsilon_0}
+\end{equation}
+
+\begin{equation}
+\medtriangledown \cdot {\bf B} = 0
+\end{equation}
+
+\begin{equation}
+\medtriangledown \times {\bf E} = -\frac{\partial {\bf B}}{\partial t}
+\end{equation}
+
+\begin{equation}
+\medtriangledown \times {\bf B} = \mu_0 \, \bigg( {\bf J} + \varepsilon_0 \frac{\partial {\bf E}}{\partial t} \bigg)
+\end{equation} \newline
+\end{fleqn} \newpage
+
+\section*{Grading Policies}
+\hrulefill \newline
+\begin{enumerate}
+	\item All project must be submitted electronically by 23:59:59 on the due date via TEACH $–$ use \q{Check time on server} if unsure about your clock. TEACH time takes priority over your local computer. \hfill
+	\item Only a single late homework assignment allowed. Only allowed up to 7 calendar days late. \hfill
+	\item Submit late homework to your assigned TA via email. \hfill
+	\item Blatant disrespect to or by the TAs will not be tolerated. \hfill
+	\item If you do not demo your project, you do not receive credit for it. \hfill
+	\item When you make an appointment to demo, show up. Failure to show up will result in a grade penalty. Repeated offenses will result in no credit for the assignment. \hfill
+	\item If your project does not compile, for any reason, no credit will be \hfill
+	\item Compilation will be on os-class. This server is the final say on whether your code compiles. \hfill
+	\item No directories in you submissions. You will be penalized for including any sort of hierarchy. \hfill
+	\item All assignments submitted to TEACH. No late submissions will be accepted via TEACH. \hfill
+	\item Naming convention: CS311\_proj$\langle$x$\rangle$\_$\langle$engr\_username$\rangle$.tar.bz2. Fill in $\langle \rangle$ with appropriate values. \hfill
+	\item No zip files will be accepted. You must use bzipped tar files. \hfill
+	\item All non-code documents must be created with LaTeX, by hand. This will be discussed in class. \hfill
+	\item All work must be done individually unless specifically allowed to work in groups. \hfill
+\end{enumerate}
+
+\section*{Learning Objectives}
+\hrulefill \newline
+\begin{itemize}
+	\item Explain why multiprogramming is important for modern operating systems.
+	\item Explain the general structure of a multiprogrammed operating system.
+	\item Explain the purpose and operation of system calls.
+	\item Write a program utilizing system calls.
+	\item Write a program using a scripting language.
+	\item Write a program that uses regular expressions to parse input data.
+	\item Write a program that spawns processes and provides mutual exclusion for variables or other resources shared by the processes.
+	\item Write a program that uses sockets to implement a client/server system.
+	\item Explain how a common file system works, including structure, I/O operations, and security.
+	\item Describe the memory organization of a typical process in a common operating system.
+\end{itemize}
+		
+\end{document}
