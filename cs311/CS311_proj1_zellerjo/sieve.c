@@ -45,7 +45,6 @@ struct master_array *init_array(int n)
 	a->length = n;
 	a->primes = 0;
 
-	// Write down the numbers 1, 2, 3, ..., n. Initially all numbers are unmarked aka 0
 	int i;
 	for(i = 0; i < a->length; i++){
 		a->data[i] = 0;
@@ -59,14 +58,7 @@ void mark_primes(struct master_array *a){
 	int j;
 	a->data[0] = 1; // Mark the number 1 as special (it is neither prime nor composite).
 
-	// Set k=1. Until k exceeds or equals the square root of n do:
 	for(k = 2; k <= sqrt(a->length); k++){
-	    // Find the first number in the list greater than k that has not been identified as composite. 
-        // ie If a->data[k+1] is not marked as a composite, then call it m
-        //    (The very first number so found is 2.) Call it m. Mark the numbers 2m, 3m, 4m, ...
-        //    as composite. (Thus in the first run we mark all even numbers greater than 2.
-        //    In the second run we mark all multiples of 3 greater than 3.)
-        // m is a prime number. Put it on your list.
         for(j = 2 * k; j <= a->length; j += k){
             a->data[j - 1] = 1; // Mark all composites
         }
