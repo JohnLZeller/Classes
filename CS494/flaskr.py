@@ -13,6 +13,17 @@ PASSWORD = 'default'
 app = Flask(__name__)
 app.config.from_object(__name__)
 
+### Decorators ###
+def checkSession(f):
+    def new_f():
+        if not session.get('logged_in'):
+            error = "Opps! You're not logged in!"
+            return render_template('index.html', error=error)
+        else:
+            f()
+    return new_f
+
+### Database Functions ###
 def init_db():
     with closing(connect_db()) as db:
         with app.open_resource('schema.sql', mode='r') as f:
@@ -32,9 +43,13 @@ def teardown_request(exception):
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
 
+### Routing ###
 @app.route('/')
 def home():
-    return render_template('index.html')
+    if not session.get('logged_in'):
+        return render_template('index.html')
+    else:
+        return render_template('dashboard.html')
 
 @app.route('/show_db')
 def show_db():
@@ -44,8 +59,19 @@ def show_db():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
-    error = None
-    success = None
+    if request.method == 'POST':
+        values = [request.form['email'], request.form['password'], time.time(), request.form['firstname'] + " " + request.form['lastname'], 
+                        None, None, None, None]
+        cur = g.db.execute('insert into users (email, password, date_register, bio, facebook, twitter, website, image) values (?, ?, ?, ?, ?, ?, ?, ?)',
+                      values)
+        g.db.commit()
+        flash('Sign up was successful! Please login now.')
+        return render_template('login.html', firstname=request.form['firstname'])
+    return render_template('signup.html')
+
+@app.route('/account', methods=['GET', 'POST'])
+@checkSession
+def account_info():
     if request.method == 'POST':
         values = [request.form['email'], request.form['password'], time.time(), request.form['firstname'] + " " + request.form['lastname'], 
                         None, None, None, None]
@@ -71,14 +97,16 @@ def login():
     error = None
     if request.method == 'POST':
         cur = g.db.execute('select email, password from users where email = ?', (request.form['email'], ))
-        email, password = cur.fetchone()
-        if email is None:
+        try:
+            email, password = cur.fetchone()
+            if request.form['password'] != password:
+                error = 'Invalid password'
+            else:
+                session['logged_in'] = True
+                flash('You were logged in')
+            return render_template('dashboard.html', error=error)
+        except TypeError:
             error = 'Invalid email'
-        elif request.form['password'] != password:
-            error = 'Invalid password'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in')
     return render_template('index.html', error=error)
 
 @app.route('/logout')
