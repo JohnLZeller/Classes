@@ -3,6 +3,10 @@ from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash
 from contextlib import closing
 import time
+from flask.ext.login import LoginManager
+from flask.ext.browserid import BrowserID
+#from my_stuff import get_user_by_id # finds a user by their id
+#from other_stuff import get_user # finds a user based on BrowserID response
 
 DATABASE = '/tmp/flaskr.db'
 DEBUG = True
@@ -13,15 +17,28 @@ PASSWORD = 'default'
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-### Decorators ###
-def checkSession(f):
-    def new_f():
-        if not session.get('logged_in'):
-            error = "Opps! You're not logged in!"
-            return render_template('index.html', error=error)
-        else:
-            f()
-    return new_f
+login_manager = LoginManager()
+login_manager.user_loader(get_user_by_id)
+login_manager.init_app(app)
+
+browser_id = BrowserID()
+browser_id.user_loader(get_user)
+browser_id.init_app(app)
+
+### Flask-Login ###
+@login_manager.user_loader
+def load_user(userid):
+    return User.get(userid)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # login and validate the user...
+        login_user(user)
+        flash("Logged in successfully.")
+        return redirect(request.args.get("next") or url_for("index"))
+    return render_template("login.html", form=form)
 
 ### Database Functions ###
 def init_db():
@@ -51,12 +68,15 @@ def home():
     else:
         return render_template('dashboard.html')
 
+### Admin Tools ###
 @app.route('/show_db')
 def show_db():
     cur = g.db.execute('select email, password from users order by email desc')
     users = [dict(email=row[0], password=row[1]) for row in cur.fetchall()]
     return render_template('show_db.html', users=users)
 
+### Deprecated ###
+"""
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
@@ -70,7 +90,6 @@ def sign_up():
     return render_template('signup.html')
 
 @app.route('/account', methods=['GET', 'POST'])
-@checkSession
 def account_info():
     if request.method == 'POST':
         values = [request.form['email'], request.form['password'], time.time(), request.form['firstname'] + " " + request.form['lastname'], 
@@ -81,16 +100,6 @@ def account_info():
         flash('Sign up was successful! Please login now.')
         return render_template('login.html', firstname=request.form['firstname'])
     return render_template('signup.html')
-
-@app.route('/add', methods=['POST'])
-def add_entry():
-    if not session.get('logged_in'):
-        abort(401)
-    g.db.execute('insert into entries (title, text) values (?, ?)',
-                 [request.form['title'], request.form['text']])
-    g.db.commit()
-    flash('New entry was successfully posted')
-    return redirect(url_for('show_entries'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -114,6 +123,7 @@ def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
     return render_template('index.html')
+"""
 
 if __name__ == '__main__':
     app.run()

@@ -30,38 +30,8 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           {% block navbar %}{% endblock %}
-          <!--<li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>-->
           {% if error %}<li><a href="#" style="color:red;"><strong>Error:</strong> {{ error }}</a></li>{% endif %}
-	        <!--<li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li class="dropdown-header">Nav header</li>
-              <li><a href="#">Separated link</a></li>
-              <li><a href="#">One more separated link</a></li>
-            </ul>
-	        </li>-->
 	      </ul>
-	      {% if not session.logged_in %}
-	        <form class="navbar-form navbar-right" role="form" action="{{ url_for('login') }}" method=post>
-	          <div class="form-group">
-	            <input type=text name=email type="text" placeholder="Email" class="form-control">
-	          </div>
-	          <div class="form-group">
-	            <input type=password name=password placeholder="Password" class="form-control">
-	          </div>
-	          <button type="submit" class="btn btn-success">Sign in</button>
-	        </form>
-		    {% else %}
-	      	<ul class="nav navbar-nav navbar-right">
-        		<li><a href="{{ url_for('logout') }}">Logout</a></li>
-        	</ul>
-		    {% endif %}
-		    
       </div><!--/.navbar-collapse -->
     </div>
   </div>
@@ -81,5 +51,7 @@
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-  <script src="../static/js/bootstrap.min.js"></script
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="https://login.persona.org/include.js"></script>
+  <script type="text/javascript">{{ auth_script|safe }}</script>
 </div>
