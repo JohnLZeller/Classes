@@ -31,6 +31,11 @@
         <ul class="nav navbar-nav">
           {% block navbar %}{% endblock %}
           {% if error %}<li><a href="#" style="color:red;"><strong>Error:</strong> {{ error }}</a></li>{% endif %}
+          {% if current_user.is_authenticated() %}
+              <button id="browserid-logout">Logout</button>
+          {% else %}        
+              <button id="browserid-login"><img src="static/plain_sign_in_blue.png"></button>
+          {% endif %}
 	      </ul>
       </div><!--/.navbar-collapse -->
     </div>
