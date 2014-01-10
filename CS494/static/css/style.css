@@ -13,3 +13,16 @@
 }
 
 /* ====================== LAYOUT ====================== */
+.persona-login-button {
+	margin-top: 13px;
+	background: transparent;
+	border: none; float;
+	position: absolute;
+	margin-left: 60%;
+    float: right !important;
+}
+
+.social_icons {
+	height: 35px;
+	width: 35px;
+}
