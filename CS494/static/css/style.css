@@ -14,12 +14,32 @@
 
 /* ====================== LAYOUT ====================== */
 .persona-login-button {
-	margin-top: 13px;
+	margin-right: 20px;
+	margin-top: 15px;
 	background: transparent;
-	border: none; float;
-	position: absolute;
-	margin-left: 60%;
-    float: right !important;
+	border: none;
+}
+
+.persona-logout-button {
+	margin-left: 15px;
+	background: transparent;
+	border: none;
+}
+
+.hide-button {
+	background: transparent;
+	border: none;
+	color: #999999;
+}
+
+.hide-button:hover {
+	background: transparent;
+	border: none;
+	color: #999999;
+}
+
+.cog {
+	margin-right: 10px;
 }
 
 .social_icons {

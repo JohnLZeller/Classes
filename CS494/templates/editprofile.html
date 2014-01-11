@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block body %}
+	<!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+  	<div class="container"><h1>Edit Profile</h1></div>
+    <div class="container signup_form_wrapper">
+      <form role="form" action="account" method=post>
+        <div class="form-group">
+          <input type=text name=lastname placeholder="Image" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type=text name=firstname placeholder="First Name" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type=text name=lastname placeholder="Last Name" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type=textarea name=bio type="text" placeholder="Tell us about yourself!" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type=text name=facebook placeholder="Facebook" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type=text name=twitter placeholder="Twitter" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type=text name=website placeholder="Website" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Save Changes</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

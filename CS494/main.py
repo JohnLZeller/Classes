@@ -98,6 +98,42 @@ def home():
         return render_template('dashboard.html')
     return render_template('index.html')
 
+@app.route('/editprofile')
+def editprofile():
+    if current_user.is_authenticated():
+        return render_template('editprofile.html')
+    return render_template('index.html', error="Opps! You've gotta be logged in for that!")
+
+@app.route('/settings')
+def settings():
+    if current_user.is_authenticated():
+        return render_template('settings.html')
+    return render_template('index.html', error="Opps! You've gotta be logged in for that!")
+
+@app.route('/browse')
+def browse():
+    if current_user.is_authenticated():
+        return render_template('browse.html')
+    return render_template('index.html', error="Opps! You've gotta be logged in for that!")
+
+@app.route('/votingrecord')
+def votingrecord():
+    if current_user.is_authenticated():
+        return render_template('votingrecord.html')
+    return render_template('index.html', error="Opps! You've gotta be logged in for that!")
+
+@app.route('/vote')
+def vote():
+    if current_user.is_authenticated():
+        return render_template('vote.html')
+    return render_template('index.html', error="Opps! You've gotta be logged in for that!")
+
+@app.route('/compatibility')
+def compatibility():
+    if current_user.is_authenticated():
+        return render_template('compatibility.html')
+    return render_template('index.html', error="Opps! You've gotta be logged in for that!")
+
 ### Admin Tools ###
 @app.route('/show_db')
 def show_db():

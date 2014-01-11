@@ -23,24 +23,54 @@
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='../static/css/persona-buttons.css') }}">
 
 <div class=page>
-  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/">iCongress</a>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          {% block navbar %}{% endblock %}
-          {% if error %}<li><a href="#" style="color:red;"><strong>Error:</strong> {{ error }}</a></li>{% endif %}
-          {% if current_user.is_authenticated() %}
-              <button id="browserid-logout" class="persona-login-button"><a href="#" class="persona-button"><span>Logout</span></a></button>
-          {% else %}
-              <button id="browserid-login" class="persona-login-button"><a href="#" class="persona-button"><span>Sign in with your Email</span></a></button>
-          {% endif %}
-	      </ul>
-      </div><!--/.navbar-collapse -->
-    </div>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/">iCongress</a>
   </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    {% if current_user.is_authenticated() %}
+      <ul class="nav navbar-nav">
+        <li><a href="browse">Browse</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Voting <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="votingrecord">Voting Record</a></li>
+            <li><a href="vote">Go Vote</a></li>
+            <li><a href="compatibility">See Compatibility List</a></li>
+          </ul>
+        </li>
+      </ul>
+    {% endif %}
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        {% if current_user.is_authenticated() %}
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle btn btn-default btn-lg hide-button cog" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="editprofile">Edit Profile</a></li>
+              <li><a href="settings">Settings</a></li>
+              <li class="divider"></li>
+              <li><button id="browserid-logout" class="persona-logout-button"><a href="#" class="persona-button"><span>Logout</span></a></button></li>
+            </ul>
+          </li>
+        {% else %}
+            <li><button id="browserid-login" class="persona-login-button"><a href="#" class="persona-button"><span>Sign in with your Email</span></a></button></li>
+        {% endif %}
+      </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+
+
   {% block body %}{% endblock %}
 
   <div class="container">
