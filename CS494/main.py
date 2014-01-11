@@ -2,7 +2,7 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 from contextlib import closing
 import time
-from flask.ext.login import LoginManager, UserMixin
+from flask.ext.login import LoginManager, UserMixin, current_user
 from flaskext.browserid import BrowserID
 from flask.ext.sqlalchemy import SQLAlchemy
 
@@ -56,12 +56,6 @@ def get_user_by_id(id):
     Given a unicode ID, returns the user that matches it.
     """
     return User.query.get(id)
-    """
-    for row in db.session.query(User).filter(User.id == id):
-        if row is not None:
-            print "get_user_by_id - " + str(type(row.User)) + " - " + str(row.User)
-            return row.User
-    return None"""
 
 def create_browserid_user(kwargs):
     """
@@ -88,18 +82,6 @@ def get_user(kwargs):
     if u is None: # user didn't exist in db
         return create_browserid_user(kwargs)
     return u
-    """
-    # try to find the user
-    for row in db.session.query(User).filter(User.email == kwargs.get('email')):
-        if row is not None:
-            print "get_user - " + str(type(row.User)) + " - " + str(row.User)
-            return row.User
-    for row in db.session.query(User).filter(User.id == kwargs.get('id')):
-        if row is not None:
-            print "get_user - " + str(type(row.User)) + " - " + str(row.User)
-            return row.User
-    # try to create the user
-    return create_browserid_user(kwargs)"""
 
 login_manager = LoginManager()
 login_manager.user_loader(get_user_by_id)
@@ -112,6 +94,8 @@ browserid.init_app(app)
 ### Routing ###
 @app.route('/')
 def home():
+    if current_user.is_authenticated():
+        return render_template('dashboard.html')
     return render_template('index.html')
 
 ### Admin Tools ###
