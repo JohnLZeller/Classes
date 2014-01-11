@@ -45,7 +45,6 @@ class User(UserMixin, db.Model):
         self.twitter = twitter
         self.website = website
         self.image = image
-        self.email = email
 
     def __repr__(self):
         return '<User %r>' % self.email
@@ -95,16 +94,26 @@ browserid.init_app(app)
 @app.route('/')
 def home():
     if current_user.is_authenticated():
-        return render_template('dashboard.html')
+        return render_template('dashboard.html', users_fullname=str(current_user.firstname) + " " + str(current_user.lastname))
     return render_template('index.html')
 
-@app.route('/editprofile')
+@app.route('/editprofile', methods=['GET', 'POST'])
 def editprofile():
     if current_user.is_authenticated():
+        error = None
+        if request.method == 'POST':
+            user = User.query.get(current_user.email)
+            user.firstname = request.form.get('firstname')
+            user.lastname = request.form.get('lastname')
+            user.bio = request.form.get('bio')
+            user.facebook = request.form.get('facebook')
+            user.twitter = request.form.get('twitter')
+            user.website = request.form.get('website')
+            user.image = request.form.get('image')
         return render_template('editprofile.html')
     return render_template('index.html', error="Opps! You've gotta be logged in for that!")
 
-@app.route('/settings')
+@app.route('/settings', methods=['GET', 'POST'])
 def settings():
     if current_user.is_authenticated():
         return render_template('settings.html')
@@ -132,6 +141,18 @@ def vote():
 def compatibility():
     if current_user.is_authenticated():
         return render_template('compatibility.html')
+    return render_template('index.html', error="Opps! You've gotta be logged in for that!")
+
+@app.route('/blog')
+def blog():
+    if current_user.is_authenticated():
+        return render_template('blog.html')
+    return render_template('index.html', error="Opps! You've gotta be logged in for that!")
+
+@app.route('/profile')
+def profile():
+    if current_user.is_authenticated():
+        return render_template('profile.html')
     return render_template('index.html', error="Opps! You've gotta be logged in for that!")
 
 ### Admin Tools ###
