@@ -5,6 +5,7 @@ import time
 from flask.ext.login import LoginManager, UserMixin, current_user
 from flaskext.browserid import BrowserID
 from flask.ext.sqlalchemy import SQLAlchemy
+from pprint import pprint
 
 ## SETUP
 DEBUG = True
@@ -102,14 +103,21 @@ def editprofile():
     if current_user.is_authenticated():
         error = None
         if request.method == 'POST':
-            user = User.query.get(current_user.email)
-            user.firstname = request.form.get('firstname')
-            user.lastname = request.form.get('lastname')
-            user.bio = request.form.get('bio')
-            user.facebook = request.form.get('facebook')
-            user.twitter = request.form.get('twitter')
-            user.website = request.form.get('website')
-            user.image = request.form.get('image')
+            user = get_user({"email": current_user.email})
+            id = user.id
+            user = User.query.get(id)
+            if request.form.get('firstname') != u'': user.firstname = request.form.get('firstname')
+            if request.form.get('lastname') != u'': user.lastname = request.form.get('lastname')
+            if request.form.get('bio') != u'': user.bio = request.form.get('bio')
+            if request.form.get('facebook') != u'': user.facebook = request.form.get('facebook')
+            if request.form.get('twitter') != u'': user.twitter = request.form.get('twitter')
+            if request.form.get('website') != u'': user.website = request.form.get('website')
+            if request.form.get('image') != u'': user.image = request.form.get('image')
+            try:
+                db.session.commit()
+            except:
+                return render_template('editprofile.html', alert_failure=True)
+            return render_template('editprofile.html', alert_success=True)
         return render_template('editprofile.html')
     return render_template('index.html', error="Opps! You've gotta be logged in for that!")
 
@@ -165,4 +173,4 @@ def show_db():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
